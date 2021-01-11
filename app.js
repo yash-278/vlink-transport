@@ -7,7 +7,6 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const app = express();
-const port = 3000;
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
@@ -145,6 +144,8 @@ app.get("/logout", function (req, res) {
   res.redirect("/");
 });
 
-app.listen(port, () => {
-  console.log(`Truck-kun approaching at http://localhost:${port}`);
-});
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port);
