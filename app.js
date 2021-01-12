@@ -28,7 +28,14 @@ mongoose.connect("mongodb+srv://vLink:12345@cluster0.3audl.mongodb.net/vLinkDB",
   useUnifiedTopology: true,
 });
 
+// Mongoose Schema
+
 const adminSchema = new mongoose.Schema({
+  username: String,
+  password: String,
+});
+
+const driverLoginSchema = new mongoose.Schema({
   username: String,
   password: String,
 });
@@ -40,21 +47,21 @@ const driverSchema = new mongoose.Schema({
 });
 
 adminSchema.plugin(passportLocalMongoose);
+driverLoginSchema.plugin(passportLocalMongoose);
 
 const Admin = new mongoose.model("Admin", adminSchema);
-
+const DriverAcc = new mongoose.model("DriverAcc", driverLoginSchema);
 const Driver = new mongoose.model("Driver", driverSchema);
 
-passport.use(Admin.createStrategy());
+passport.use("adminLocal", Admin.createStrategy());
+passport.use("driverLocal", DriverAcc.createStrategy());
 
 passport.serializeUser(function (user, done) {
-  done(null, user.id);
+  done(null, user);
 });
 
-passport.deserializeUser(function (id, done) {
-  Admin.findById(id, function (err, user) {
-    done(err, user);
-  });
+passport.deserializeUser(function (user, done) {
+  if (user != null) done(null, user);
 });
 
 //  ============== GET / POST Requests =================
@@ -88,6 +95,83 @@ app.post("/search", (req, res) => {
   });
 });
 
+// ============ Driver Login ===============
+
+app.get("/driverlogin", (req, res) => {
+  res.render("driverLogin");
+});
+
+app.get("/driverdashboard", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render("driver", {
+      currentUser: req.user,
+    });
+  } else {
+    res.redirect("/driverlogin");
+  }
+});
+
+app.post("/driversignin", (req, res) => {
+  DriverAcc.register({ username: req.body.username }, req.body.password, function (err, user) {
+    if (err) {
+      console.log(err);
+      // res.redirect("/driverlogin");
+    } else {
+      passport.authenticate("driverLocal")(req, res, function () {
+        res.redirect("/driverdashboard");
+      });
+    }
+  });
+});
+
+app.post("/driverlogin", function (req, res) {
+  const driver = new DriverAcc({
+    username: req.body.username,
+    password: req.body.password,
+  });
+
+  req.login(driver, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      passport.authenticate("driverLocal")(req, res, function () {
+        res.redirect("/driverdashboard");
+      });
+    }
+  });
+});
+
+// ============ Admin Login ===============
+
+app.get("/admin", (req, res) => {
+  res.render("adminLogin");
+});
+
+app.get("/admindashboard", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render("admin");
+  } else {
+    res.redirect("/admin");
+  }
+});
+
+app.post("/adminlogin", function (req, res) {
+  const admin = new Admin({
+    username: req.body.username,
+    password: req.body.password,
+  });
+
+  req.login(admin, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      passport.authenticate("adminLocal")(req, res, function () {
+        res.redirect("/admindashboard");
+      });
+    }
+  });
+});
+
 // ============ Add Driver Data ============
 
 app.get("/driver", (req, res) => {
@@ -111,30 +195,7 @@ app.post("/driveradd", (req, res) => {
 
   driver.save(function (err) {
     if (!err) {
-      res.redirect("/");
-    }
-  });
-});
-
-// ============ Admin Login ===============
-
-app.get("/admin", (req, res) => {
-  res.render("admin");
-});
-
-app.post("/adminlogin", function (req, res) {
-  const admin = new Admin({
-    username: req.body.username,
-    password: req.body.password,
-  });
-
-  req.login(admin, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      passport.authenticate("local")(req, res, function () {
-        res.redirect("/");
-      });
+      res.redirect("/admindashboard");
     }
   });
 });
