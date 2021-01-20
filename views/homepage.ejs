@@ -47,6 +47,9 @@
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/driverlogin">Login as Driver</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/logout">Log-Out</a>
             </li>
           </ul>
@@ -56,27 +59,16 @@
     <br />
 
     <div class="container">
-      <form action="/adminlogin" method="POST">
-        <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
+      <h3>Vlink Transport - Homepage</h3>
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Username </span>
-          </div>
-          <input type="text" class="form-control" name="username" />
-        </div>
+      <br />
 
-        <!-- ? ================= 2nd Input Box using Bootstrap  =========================-->
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Password </span>
-          </div>
-          <input type="password" class="form-control" name="password" />
-        </div>
+      <a href="/driverlogin" class="btn btn-primary">Login As Driver</a>
 
-        <!-- ? ================= Button using Bootstrap  =========================-->
-        <button type="submit" class="btn btn-block btn-dark">Login</button>
-      </form>
+      <br />
+      <br />
+
+      <a href="/industrylogin" class="btn btn-primary">Login As Industrialist</a>
     </div>
 
     <!-- JavaScript Bundle with Popper -->

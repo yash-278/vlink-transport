@@ -56,29 +56,58 @@
     <br />
 
     <div class="container">
-      <form action="/adminlogin" method="POST">
+      <h1>Welcome Driver, <%= currentUser.username %></h1>
+      <hr />
+      <p>Verify your Identity with VLink Transport to get orders...</p>
+
+      <form action="/driververify" method="POST" enctype="multipart/form-data">
         <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
 
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Username </span>
+            <span class="input-group-text" id="inputGroup-sizing-default"> Full Name </span>
           </div>
-          <input type="text" class="form-control" name="username" />
+          <input type="text" class="form-control" name="fname" />
         </div>
 
-        <!-- ? ================= 2nd Input Box using Bootstrap  =========================-->
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Password </span>
+            <span class="input-group-text" id="inputGroup-sizing-default"> Email </span>
           </div>
-          <input type="password" class="form-control" name="password" />
+          <input type="text" class="form-control" name="email" />
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"> Phone Number </span>
+          </div>
+          <input type="text" class="form-control" name="phNumber" />
+        </div>
+        <!-- ? ================= 2nd Input Box using Bootstrap  =========================-->
+        <div class="input-group mb-3">
+          <div class="mb-3">
+            <label for="formFileMultiple" class="form-label">RC Book</label>
+            <input class="form-control" name="images" type="file" id="formFile" multiple />
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="mb-3">
+            <label for="formFileMultiple" class="form-label">Insurance Papers</label>
+            <input class="form-control" type="file" id="formFileMultiple" name="images" />
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="mb-3">
+            <label for="formFileMultiple" class="form-label">Driving License</label>
+            <input class="form-control" type="file" id="formFileMultiple" name="images" />
+          </div>
         </div>
 
         <!-- ? ================= Button using Bootstrap  =========================-->
-        <button type="submit" class="btn btn-block btn-dark">Login</button>
+        <button type="submit" class="btn btn-block btn-dark">Apply for Verification</button>
       </form>
     </div>
-
     <!-- JavaScript Bundle with Popper -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -47,12 +47,6 @@
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page">Logged User : <%= currentUser %> </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/driverlogin">Login as Driver</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/logout">Log-Out</a>
             </li>
           </ul>
@@ -62,39 +56,51 @@
     <br />
 
     <div class="container">
-      <form action="/search" method="POST">
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">From</label>
-          <input
-            type="text"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Address"
-            name="fromAddress"
-          />
-        </div>
+      <h3>Login to VLink Transport</h3>
+      <br />
+      <form action="/industrylogin" method="POST">
+        <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
 
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">To</label>
-          <input
-            type="text"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Address"
-            name="toAddress"
-          />
-        </div>
-
-        <h3>Pick Date</h3>
-        <div class="ui calendar" id="example2">
-          <div class="ui input left icon">
-            <i class="calendar icon"></i>
-            <input type="text" placeholder="Date" name="date" />
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"> Username </span>
           </div>
+          <input type="text" class="form-control" name="username" />
         </div>
-        <br />
 
-        <button class="btn btn-dark" type="submit">Search Trucks</button>
+        <!-- ? ================= 2nd Input Box using Bootstrap  =========================-->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"> Password </span>
+          </div>
+          <input type="password" class="form-control" name="password" />
+        </div>
+
+        <!-- ? ================= Button using Bootstrap  =========================-->
+        <button type="submit" class="btn btn-block btn-dark">Login As Industrialist</button>
+      </form>
+      <hr />
+      <h3>Don't have a Account? Sign Up now!</h3>
+      <form action="/industrysignin" method="POST">
+        <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"> Username </span>
+          </div>
+          <input type="text" class="form-control" name="username" />
+        </div>
+
+        <!-- ? ================= 2nd Input Box using Bootstrap  =========================-->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"> Password </span>
+          </div>
+          <input type="password" class="form-control" name="password" />
+        </div>
+
+        <!-- ? ================= Button using Bootstrap  =========================-->
+        <button type="submit" class="btn btn-block btn-dark">Sign-Up As Industrialist</button>
       </form>
     </div>
 
