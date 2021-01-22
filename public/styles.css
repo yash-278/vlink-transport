@@ -1,3 +1,294 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+body {
+  background-color: #f8f9fa;
+  font-family: "Montserrat", sans-serif !important;
+  color: white;
+}
+
 a {
   text-decoration: none;
+}
+
+h1 {
+  font-family: "Montserrat", sans-serif;
+}
+
+.navigation {
+  background-color: #112d4e !important;
+  /* background-color: transparent; */
+}
+
+.header {
+  height: 100vh;
+  background-image: url("./images/hero.jpg");
+  overflow: hidden;
+}
+
+.hero {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(17, 45, 78, 0.7);
+}
+
+.hero-title > h1 {
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 700;
+  font-size: 3rem;
+}
+
+.hero-title > p {
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin: 1em 0;
+}
+
+.hero-buttons {
+  padding: 1em 0;
+}
+
+.down-icon {
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+@media (max-width: 450px) {
+  .hero-title > h1 {
+    font-size: 2rem;
+  }
+
+  .hero-title > p {
+    font-size: 1.1rem;
+    padding: 1em 0;
+  }
+}
+
+/* =========================== Welcome Section =============================== */
+
+.welcome {
+  color: black;
+  margin: auto;
+  text-align: center;
+  padding: 4em 1em;
+}
+.welcome > h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 2.4rem;
+}
+
+.welcome > p {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2em;
+}
+
+@media (max-width: 450px) {
+  .welcome > h1 {
+    font-size: 2rem;
+  }
+}
+
+/* ================================ Services Section ================================ */
+
+.services {
+  background-color: #112d4e;
+  padding: 3em;
+  text-align: center;
+}
+
+.services > .container > h1 {
+  padding: 1em 0;
+}
+
+.cards {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.card {
+  background-color: transparent !important;
+  padding: 3em;
+}
+.card-body > h5 {
+  font-family: "Montserrat", sans-serif;
+}
+
+@media (max-width: 450px) {
+  .services {
+    padding: 2em 0;
+  }
+  .card {
+    padding: 1em;
+  }
+}
+
+/* =================================  Choose Us ========================================= */
+
+.choose {
+  display: flex;
+  /* height: 75vh; */
+  overflow: hidden;
+  text-align: left;
+  background-color: #ececec;
+}
+
+.choose-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 50%;
+}
+
+.choose-img > img {
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.choose-txt {
+  color: black;
+  width: 50%;
+  padding-left: 6em;
+  margin: auto 0;
+}
+
+.choose-txt > h1 {
+  padding: 1em 0;
+}
+
+.choose-txt > p {
+  max-width: 500px;
+}
+
+@media (max-width: 450px) {
+  .choose-img {
+    display: none;
+  }
+
+  .choose-txt {
+    padding: 1em 2em;
+    line-height: 2;
+    width: 100%;
+    text-align: center;
+  }
+}
+/* =================================   Quote ================================= */
+
+.quote {
+  color: black;
+  text-align: center;
+  padding: 3em 0;
+}
+
+.quote-icon {
+  font-size: 2.5rem;
+  padding: 20px;
+  color: #112d4e;
+  border: #858585 solid 0.5px;
+  border-radius: 100px;
+  margin: 1em 0;
+  transform: rotate(25deg);
+}
+
+.quote-txt {
+  max-width: 700px;
+  margin: 0 auto 2em;
+  font-size: 1.4rem;
+}
+
+.quote-auth {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #112d4e;
+}
+
+@media (max-width: 450px) {
+  .quote-icon {
+    font-size: 1.5rem;
+  }
+
+  .quote-txt {
+    font-size: 1.2rem;
+    padding: 0 1em;
+  }
+}
+
+/*  ================================== End Informatio =========================== */
+.end-backdrop {
+  background-image: url("/images/end.jpg");
+  background-size: cover;
+  background-position: bottom;
+}
+
+.end-overshadow {
+  background: rgba(17, 45, 78, 0.9);
+}
+
+.end-container {
+  max-width: 1100px;
+  margin: auto;
+  text-align: center;
+  padding-bottom: 3em;
+}
+
+.end-container > h1 {
+  margin: 0 auto;
+  padding: 2em 0;
+  font-weight: 700;
+  max-width: 800px;
+  font-size: 2.3rem;
+}
+
+.end-data {
+  border: 1px solid white;
+}
+
+.end-data:first-child {
+  border-left: none;
+}
+
+.end-data:nth-child(1n) {
+  border-left: none;
+}
+
+.end-data:last-child {
+  border-right: none;
+}
+
+@media (max-width: 450px) {
+  .end-container > h1 {
+    font-size: 1.8rem;
+    padding: 2em 0 1em;
+  }
+  .end-data:nth-child(3) {
+    border-right: none;
+  }
+}
+
+@media (max-width: 325px) {
+  .end-data:nth-child(2) {
+    border-right: none;
+  }
+  .end-data:nth-child(3) {
+    border-right: 1px solid white;
+  }
+}
+
+/* ===========================    Foooterrrrrrrrr =========================== */
+
+.footer {
+  color: rgb(45, 45, 45);
+  text-align: center;
+  padding: 2em;
+  font-weight: 600;
+}
+
+@media (max-width: 450px) {
+  .footer {
+    font-size: 0.8rem;
+  }
 }

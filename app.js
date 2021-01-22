@@ -9,12 +9,6 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const nodemailer = require("nodemailer");
 const multer = require("multer");
 
-// Name number address
-// RC book
-// Insurance papers
-// Driving License
-// Age, email (optional)
-
 const app = express();
 
 var storage = multer.diskStorage({
@@ -111,23 +105,6 @@ let transporter = nodemailer.createTransport({
 app.get("/", (req, res) => {
   res.render("homepage");
 });
-
-// app.get("/", (req, res) => {
-//   if (req.isAuthenticated()) {
-//     if (req.user === undefined) {
-//       res.render("index", {
-//         currentUser: "Not Logged In",
-//       });
-//     } else {
-//       currentUser = req.user.username;
-//       res.render("index", {
-//         currentUser,
-//       });
-//     }
-//   } else {
-//     res.redirect("/homepage");
-//   }
-// });
 
 app.post("/search", (req, res) => {
   let fromAddress = req.body.fromAddress;
@@ -318,6 +295,7 @@ app.post("/driververify", (req, res) => {
         `,
         attachments: addedAttachments,
       };
+
       transporter.sendMail(message, (err, info) => {
         if (err) {
           console.log(err);
@@ -376,7 +354,7 @@ app.post("/adminlogin", function (req, res) {
 
 app.get("/driver", (req, res) => {
   if (req.isAuthenticated()) {
-    res.render("addDriver");
+    res.render("driverAdd");
   } else {
     res.redirect("/");
   }

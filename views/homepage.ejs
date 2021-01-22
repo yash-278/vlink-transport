@@ -15,7 +15,11 @@
       rel="stylesheet"
       type="text/css"
     />
-
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" /> -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -27,53 +31,201 @@
     <title>Vlink Transport</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">Vlink Transport</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/driverlogin">Login as Driver</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/logout">Log-Out</a>
-            </li>
-          </ul>
+    <div class="header">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark navigation">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Vlink Transport</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item mx-4">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item mx-4">
+                <a class="nav-link" aria-current="page" href="/driverlogin">Login as Driver</a>
+              </li>
+              <li class="nav-item mx-4">
+                <a class="nav-link" aria-current="page" href="/industrylogin">Login as Industry</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="backdrop"></div>
+      <div class="hero">
+        <div class="hero-title">
+          <h1>
+            Whatever your logistics need... <br />
+            We'll deliver
+          </h1>
+          <p>Driven by excellence. Proven by performance</p>
+          <div class="hero-buttons">
+            <a href="/industrylogin" class="btn btn-lg btn-primary px-4 py-3 mx-3 my-2"
+              >Connect as a Industry</a
+            >
+            <a href="/driverlogin" class="btn btn-lg btn-outline-light px-4 py-3 mx-3 my-2">
+              Join us as a Driver
+            </a>
+          </div>
+          <p>Book A Shipment</p>
+          <i class="fa fa-angle-down down-icon"></i>
         </div>
       </div>
-    </nav>
-    <br />
+    </div>
 
-    <div class="container">
-      <h3>Vlink Transport - Homepage</h3>
+    <div class="container welcome">
+      <h1 class="welcome-title">Welcome to VLink Transport</h1>
+      <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, cum rem. At repellat
+        perferendis natus harum? Inventore reprehenderit minima, quibusdam eos dolor quia qui nam
+        laudantium illum, itaque, totam ad! Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Dolores tempore repellat laboriosam. Excepturi exercitationem, mollitia ducimus! Tempore,
+        fuga nihil?
+      </p>
+      <a href="" class="btn btn-lg btn-outline-dark px-5 py-3">More Information</a>
+    </div>
 
-      <br />
+    <div class="services">
+      <div class="container">
+        <h1>Our Services</h1>
+        <div class="cards">
+          <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+              <div class="card border-light m-3">
+                <div class="card-body">
+                  <h5 class="card-title fs-4 fw-bold">Transportation</h5>
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, iure? Iure
+                    incidunt aliquam velit atque quis pariatur non, nam tempora quam vero illum
+                    praesentium similique, beatae earum impedit voluptatem dolorum.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card border-light m-3">
+                <div class="card-body">
+                  <h5 class="card-title fs-4 fw-bold">Frieght Management</h5>
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, iure? Iure
+                    incidunt aliquam velit atque quis pariatur non, nam tempora quam vero illum
+                    praesentium similique, beatae earum impedit voluptatem dolorum.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card border-light m-3">
+                <div class="card-body">
+                  <h5 class="card-title fs-4 fw-bold">Warehousing</h5>
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, iure? Iure
+                    incidunt aliquam velit atque quis pariatur non, nam tempora quam vero illum
+                    praesentium similique, beatae earum impedit voluptatem dolorum.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card border-light m-3">
+                <div class="card-body">
+                  <h5 class="card-title fs-4 fw-bold">Technology</h5>
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, iure? Iure
+                    incidunt aliquam velit atque quis pariatur non, nam tempora quam vero illum
+                    praesentium similique, beatae earum impedit voluptatem dolorum.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <a href="/driverlogin" class="btn btn-primary">Login As Driver</a>
+    <div class="choose">
+      <div class="choose-img">
+        <img src="/images/choose.jpg" alt="" srcset="" class="image" />
+      </div>
+      <div class="choose-txt">
+        <h1>Why Choose Us?</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit excepturi saepe
+          architecto aspernatur hic asperiores ducimus rerum voluptatibus ut officia. Eos nostrum
+          dolor corporis earum unde quas soluta quia tempora. Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Exercitationem laboriosam itaque debitis hic. Dignissimos natus, et vel
+          labore velit tenetur. Cumque mollitia quibusdam minima id doloremque quidem laudantium
+          officiis esse. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae sed
+          accusamus repudiandae necessitatibus, nam aliquid repellendus unde rem? Id laborum esse
+          repudiandae quas voluptatum accusantium asperiores odio quae eum modi.
+        </p>
+        <a href="" class="btn btn-lg btn-outline-dark px-5 py-3 my-4">More Information</a>
+      </div>
+    </div>
 
-      <br />
-      <br />
+    <div class="container quote">
+      <i class="fa fa-quote-left quote-icon"></i>
+      <p class="quote-txt">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate amet error laudantium
+        sed, culpa nostrum a veritatis excepturi, facere eius quia iure fugiat modi? Nesciunt
+        corrupti voluptatibus vero assumenda enim.
+      </p>
+      <p class="quote-auth">JOHN SMITH</p>
+    </div>
 
-      <a href="/industrylogin" class="btn btn-primary">Login As Industrialist</a>
+    <div class="end-backdrop">
+      <div class="end-overshadow">
+        <div class="container end-container">
+          <h1>
+            One highly integrated, global team <br />
+            committed to strengthening your supply chain
+          </h1>
+          <div class="container my-5">
+            <div class="row">
+              <div class="col py-5 end-data">
+                <h1>20,000+</h1>
+                <p>employees</p>
+              </div>
+              <div class="col py-5 end-data">
+                <h1>1,000+</h1>
+                <p>locations</p>
+              </div>
+              <div class="col py-5 end-data">
+                <h1>20</h1>
+                <p>countries</p>
+              </div>
+              <div class="col py-5 end-data">
+                <h1>50,000+</h1>
+                <p>customers</p>
+              </div>
+            </div>
+          </div>
 
-      <br />
-      <br />
+          <div class="hero-buttons">
+            <a href="/industrylogin" class="btn btn-lg btn-primary px-4 py-3 mx-3 my-2">
+              Connect as a Industry
+            </a>
+            <a href="/driverlogin" class="btn btn-lg btn-outline-light px-4 py-3 mx-3 my-2">
+              Join us as a Driver
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <a href="/admin" class="btn btn-primary">Login As Admin</a>
+    <div class="footer">
+      <p>Copyright © vlinktransport.com. All Rights Reserved. | Designed by: Yash Kadam</p>
     </div>
 
     <!-- JavaScript Bundle with Popper -->
