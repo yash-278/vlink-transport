@@ -23,7 +23,7 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
     <title>Vlink Transport</title>
   </head>
   <body>
@@ -47,6 +47,9 @@
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/driverlogin">Login as Driver</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/logout">Log-Out</a>
             </li>
           </ul>
@@ -56,44 +59,12 @@
     <br />
 
     <div class="container">
-      <h1>Transport Details</h1>
-      <hr />
-      <p>From : <%= fromAddress %></p>
-      <p>To : <%= toAddress %></p>
-      <p>Date of Transport : <%= date %></p>
-      <p>Material : <%= material %></p>
-      <p>Weight (in MT) : <%= weight %></p>
-      <p>No. of Trucks : <%= trucks %></p>
-      <p>Date of Transport : <%= date %></p>
+      <h1>Driver Profile : <%= driver.name %></h1>
 
       <hr />
-    </div>
-    <br />
 
-    <div class="container">
-      <h1>Available Drivers</h1>
-      <hr />
-      <% drivers.forEach(function(driver){ %>
-      <div class="card mb-3" style="max-width: 540px">
-        <div class="row g-0">
-          <!-- <div class="col-md-4">
-              <img src="..." alt="..." />
-            </div> -->
-          <div class="col-md-8">
-            <a href="/search/<%= driver.id %>">
-              <div class="card-body">
-                <h5 class="card-title"><%= driver.name %></h5>
-                <p class="card-text"><%= driver.desc %></p>
-                <p class="card-text">
-                  <small class="text-muted">Rating : <%= driver.rating %> out of 5 stars</small>
-                </p>
-              </div>
-            </a>
-          </div>
-          <br />
-        </div>
-      </div>
-      <% }); %>
+      <p>Bio : <%= driver.desc %></p>
+      <p>Rating : <%= driver.rating %></p>
     </div>
 
     <!-- JavaScript Bundle with Popper -->

@@ -3,7 +3,7 @@
 body {
   background-color: #f8f9fa;
   font-family: "Montserrat", sans-serif !important;
-  color: white;
+  /* color: white; */
 }
 
 a {
@@ -23,6 +23,7 @@ h1 {
   height: 100vh;
   background-image: url("./images/hero.jpg");
   overflow: hidden;
+  color: white;
 }
 
 .hero {
@@ -98,6 +99,7 @@ h1 {
   background-color: #112d4e;
   padding: 3em;
   text-align: center;
+  color: white;
 }
 
 .services > .container > h1 {
@@ -222,6 +224,7 @@ h1 {
   background-image: url("/images/end.jpg");
   background-size: cover;
   background-position: bottom;
+  color: white;
 }
 
 .end-overshadow {

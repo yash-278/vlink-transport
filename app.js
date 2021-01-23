@@ -8,6 +8,7 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const nodemailer = require("nodemailer");
 const multer = require("multer");
+const { nextTick } = require("process");
 
 const app = express();
 
@@ -110,14 +111,32 @@ app.post("/search", (req, res) => {
   let fromAddress = req.body.fromAddress;
   let toAddress = req.body.toAddress;
   let date = req.body.date;
+  let material = req.body.material;
+  let weight = req.body.weight;
+  let trucks = req.body.trucks;
+
+  console.log(req.body);
 
   Driver.find({}, function (err, drivers) {
-    console.log(drivers);
+    // console.log(drivers);
     res.render("search", {
       drivers,
       fromAddress,
       toAddress,
+      material,
+      weight,
+      trucks,
       date,
+    });
+  });
+});
+
+app.get("/search/:id", (req, res) => {
+  const id = req.params.id;
+  // console.log(id);
+  Driver.findById(id, function (err, driver) {
+    res.render("driverProfile", {
+      driver,
     });
   });
 });
