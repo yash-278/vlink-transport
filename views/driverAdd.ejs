@@ -70,23 +70,77 @@
 
         <!-- ? ================= 2nd Input Box using Bootstrap  =========================-->
         <div class="input-group mb-3">
-          <span class="input-group-text">Description</span>
+          <span class="input-group-text">Address</span>
           <textarea
             class="form-control"
             aria-label="With textarea"
-            placeholder=" Driver's Description"
-            name="driverDesc"
+            placeholder=" Driver's Address"
+            name="driverAddress"
           ></textarea>
         </div>
-
-        <!-- ? ================= 3rd Input Box using Bootstrap  =========================-->
-
+        <!-- ========================== -->
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Rating </span>
+            <span class="input-group-text" id="inputGroup-sizing-default"> Phone No. </span>
           </div>
-          <input type="text" class="form-control" placeholder="Out of 5" name="rating" />
+          <input
+            type="text"
+            class="form-control"
+            name="driverNumber"
+            placeholder="Driver's Phone No."
+          />
         </div>
+        <!-- ============================= -->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">
+              Preferred Travelling Cities
+            </span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            name="driverPreference"
+            placeholder="Driver's Preferred Travelling Cities"
+          />
+        </div>
+        <!-- ============================ -->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"> Fixed Route </span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            name="driverRoute"
+            placeholder="Driver's Fixed Route"
+          />
+        </div>
+        <!-- ======================== -->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"> Vehicle Type </span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            name="driverVehicle"
+            placeholder="Driver's Vehicle Type"
+          />
+        </div>
+        <!-- ============================= -->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"> Vehicle Capacity </span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            name="driverCapacity"
+            placeholder="Driver's Vehicle Capacity"
+          />
+        </div>
+        <!-- ? ================= 3rd Input Box using Bootstrap  =========================-->
 
         <!-- ? ================= Button using Bootstrap  =========================-->
         <button type="submit" class="btn btn-block btn-dark">Add Driver to Database</button>

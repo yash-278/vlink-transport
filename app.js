@@ -65,8 +65,12 @@ const industryLoginSchema = new mongoose.Schema({
 
 const driverSchema = new mongoose.Schema({
   name: String,
-  desc: String,
-  rating: String,
+  phoneNo: String,
+  address: String,
+  preferredCities: String,
+  fixedRoute: String,
+  vehicleType: String,
+  vehicleCapacity: String,
 });
 
 adminSchema.plugin(passportLocalMongoose);
@@ -101,6 +105,8 @@ let transporter = nodemailer.createTransport({
   },
 });
 
+let bookingDetails;
+
 //  ============== GET / POST Requests =================
 
 app.get("/", (req, res) => {
@@ -115,10 +121,11 @@ app.post("/search", (req, res) => {
   let weight = req.body.weight;
   let trucks = req.body.trucks;
 
-  console.log(req.body);
+  bookingDetails = {};
+
+  bookingDetails = { fromAddress, toAddress, material, weight, trucks, date };
 
   Driver.find({}, function (err, drivers) {
-    // console.log(drivers);
     res.render("search", {
       drivers,
       fromAddress,
@@ -133,10 +140,45 @@ app.post("/search", (req, res) => {
 
 app.get("/search/:id", (req, res) => {
   const id = req.params.id;
-  // console.log(id);
   Driver.findById(id, function (err, driver) {
     res.render("driverProfile", {
       driver,
+    });
+  });
+});
+
+app.post("/search/:id/bookdriver", (req, res) => {
+  const id = req.params.id;
+
+  Driver.findById(id, function (err, driver) {
+    let message = {
+      from: "yashkadam872@gmail.com",
+      to: "muzzamilvalor@gmail.com",
+      subject: `Booking Request by ${req.user.username}`,
+      html: `
+      <p>Client Name : ${req.user.username}</p>
+      
+      =====================================================
+      Booking Details
+      =====================================================
+      
+      <p>Pickup Address : ${bookingDetails.fromAddress}</p>
+      <p>Pickup Address : ${bookingDetails.toAddress}</p>
+      <p>Pickup Address : ${bookingDetails.material}</p>
+      <p>Pickup Address : ${bookingDetails.weight}</p>
+      <p>Pickup Address : ${bookingDetails.trucks}</p>
+      <p>Pickup Address : ${bookingDetails.date}</p>
+      `,
+    };
+
+    transporter.sendMail(message, (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Email sent" + info.response);
+
+        res.redirect("/industrydashboard");
+      }
     });
   });
 });
@@ -381,13 +423,21 @@ app.get("/driver", (req, res) => {
 
 app.post("/driveradd", (req, res) => {
   const name = req.body.driverName;
-  const desc = req.body.driverDesc;
-  const rating = req.body.rating;
+  const address = req.body.driverAddress;
+  const phoneNo = req.body.driverNumber;
+  const preferredCities = req.body.driverPreference;
+  const fixedRoute = req.body.driverRoute;
+  const vehicleType = req.body.driverVehicle;
+  const vehicleCapacity = req.body.driverCapacity;
 
   const driver = new Driver({
     name,
-    desc,
-    rating,
+    address,
+    phoneNo,
+    preferredCities,
+    fixedRoute,
+    vehicleType,
+    vehicleCapacity,
   });
 
   driver.save(function (err) {
