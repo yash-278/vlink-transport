@@ -107,7 +107,35 @@ let transporter = nodemailer.createTransport({
 
 let bookingDetails;
 
+// Set your secret key. Remember to switch to your live secret key in production!
+// See your keys here: https://dashboard.stripe.com/account/apikeys
+const Stripe = require("stripe");
+const stripe = Stripe("sk_test_kzZzGntxK94pxY2LbrUOViMN00iFmaBvZH");
+
 //  ============== GET / POST Requests =================
+
+app.post("/create-checkout-session", async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "T-shirt",
+          },
+          unit_amount: 2000,
+        },
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: "https://example.com/success",
+    cancel_url: "https://example.com/cancel",
+  });
+
+  res.json({ id: session.id });
+});
 
 app.get("/", (req, res) => {
   res.render("homepage");
@@ -153,10 +181,17 @@ app.post("/search/:id/bookdriver", (req, res) => {
   Driver.findById(id, function (err, driver) {
     let message = {
       from: "yashkadam872@gmail.com",
-      to: "muzzamilvalor@gmail.com",
+      to: "yashkadam278@gmail.com",
       subject: `Booking Request by ${req.user.username}`,
       html: `
       <p>Client Name : ${req.user.username}</p>
+
+      =====================================================
+      Driver Details
+      =====================================================
+
+      <p>Driver Name : ${driver.name}</p>
+      <p>Driver Phone no. : ${driver.phoneNo}</p>
       
       =====================================================
       Booking Details

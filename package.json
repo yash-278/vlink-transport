@@ -21,6 +21,7 @@
     "passport": "^0.4.1",
     "passport-local-mongoose": "^6.1.0",
     "postcss": "^8.2.4",
+    "stripe": "^8.132.0",
     "tailwindcss": "^2.0.2"
   }
 }
