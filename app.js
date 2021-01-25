@@ -43,7 +43,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb+srv://vLink:12345@cluster0.3audl.mongodb.net/vLinkDB", {
+mongoose.connect(`${process.env.MONGOOSE_URL}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
