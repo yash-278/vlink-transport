@@ -127,7 +127,19 @@ app.post("/search", (req, res) => {
 
   bookingDetails = { fromAddress, toAddress, material, weight, trucks, date };
 
-  Driver.find({}, function (err, drivers) {
+  // Driver.find({}, function (err, drivers) {
+  //   res.render("search", {
+  //     drivers,
+  //     fromAddress,
+  //     toAddress,
+  //     material,
+  //     weight,
+  //     trucks,
+  //     date,
+  //   });
+  // });
+
+  Driver.find().then((drivers) => {
     res.render("search", {
       drivers,
       fromAddress,
