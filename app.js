@@ -8,7 +8,9 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const nodemailer = require("nodemailer");
 const multer = require("multer");
-const { nextTick } = require("process");
+// const { nextTick } = require("process");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
 
@@ -41,7 +43,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb+srv://vLink:12345@cluster0.3audl.mongodb.net/vLinkDB", {
+mongoose.connect(`${process.env.MONGOOSE_URL}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -100,46 +102,18 @@ let transporter = nodemailer.createTransport({
   port: 587,
   secure: 465,
   auth: {
-    user: "yashkadam872@gmail.com",
-    pass: "9833379003",
+    user: `${process.env.SMTP_USER}`,
+    pass: `${process.env.SMTP_PASS}`,
   },
 });
 
-let bookingDetails;
-
-// Set your secret key. Remember to switch to your live secret key in production!
-// See your keys here: https://dashboard.stripe.com/account/apikeys
-const Stripe = require("stripe");
-const stripe = Stripe("sk_test_kzZzGntxK94pxY2LbrUOViMN00iFmaBvZH");
-
 //  ============== GET / POST Requests =================
-
-app.post("/create-checkout-session", async (req, res) => {
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: [
-      {
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "T-shirt",
-          },
-          unit_amount: 2000,
-        },
-        quantity: 1,
-      },
-    ],
-    mode: "payment",
-    success_url: "https://example.com/success",
-    cancel_url: "https://example.com/cancel",
-  });
-
-  res.json({ id: session.id });
-});
 
 app.get("/", (req, res) => {
   res.render("homepage");
 });
+
+let bookingDetails;
 
 app.post("/search", (req, res) => {
   let fromAddress = req.body.fromAddress;
@@ -166,54 +140,15 @@ app.post("/search", (req, res) => {
   });
 });
 
+let bookingId = "";
+
 app.get("/search/:id", (req, res) => {
   const id = req.params.id;
+  bookingId = req.params.id;
+
   Driver.findById(id, function (err, driver) {
     res.render("driverProfile", {
       driver,
-    });
-  });
-});
-
-app.post("/search/:id/bookdriver", (req, res) => {
-  const id = req.params.id;
-
-  Driver.findById(id, function (err, driver) {
-    let message = {
-      from: "yashkadam872@gmail.com",
-      to: "yashkadam278@gmail.com",
-      subject: `Booking Request by ${req.user.username}`,
-      html: `
-      <p>Client Name : ${req.user.username}</p>
-
-      =====================================================
-      Driver Details
-      =====================================================
-
-      <p>Driver Name : ${driver.name}</p>
-      <p>Driver Phone no. : ${driver.phoneNo}</p>
-      
-      =====================================================
-      Booking Details
-      =====================================================
-      
-      <p>Pickup Address : ${bookingDetails.fromAddress}</p>
-      <p>Pickup Address : ${bookingDetails.toAddress}</p>
-      <p>Pickup Address : ${bookingDetails.material}</p>
-      <p>Pickup Address : ${bookingDetails.weight}</p>
-      <p>Pickup Address : ${bookingDetails.trucks}</p>
-      <p>Pickup Address : ${bookingDetails.date}</p>
-      `,
-    };
-
-    transporter.sendMail(message, (err, info) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Email sent" + info.response);
-
-        res.redirect("/industrydashboard");
-      }
     });
   });
 });
@@ -479,6 +414,74 @@ app.post("/driveradd", (req, res) => {
     if (!err) {
       res.redirect("/admindashboard");
     }
+  });
+});
+
+// ======================================================================================
+
+// Set your secret key. Remember to switch to your live secret key in production!
+// See your keys here: https://dashboard.stripe.com/account/apikeys
+const Stripe = require("stripe");
+const stripe = Stripe(`${process.env.STRIPE_SECRET_KEY}`);
+
+app.post("/create-checkout-session", async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: "inr",
+          product_data: {
+            name: "Book Truck",
+          },
+          unit_amount: 200000,
+        },
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: `https://vlink-transport.herokuapp.com/success`,
+    cancel_url: "https://example.com/cancel",
+  });
+
+  res.json({ id: session.id });
+});
+
+app.get("/success", (req, res) => {
+  Driver.findById(bookingId, function (err, driver) {
+    var message = {
+      from: "yashkadam872@gmail.com",
+      to: "muzzamilvalor@gmail.com",
+      subject: `Booking Request by ${req.user.username}`,
+      html: `
+
+      <h2>${req.user.username} has paid : Rs 2000/-</h2>
+
+      <p>Client Name : ${req.user.username}</p>
+      =====================================================
+      Driver Details
+      =====================================================
+      <p>Driver Name : ${driver.name}</p>
+      <p>Driver Phone no. : ${driver.phoneNo}</p>
+      =====================================================
+      Booking Details
+      =====================================================
+      <p>Pickup Address : ${bookingDetails.fromAddress}</p>
+      <p>Drop Address : ${bookingDetails.toAddress}</p>
+      <p>Material : ${bookingDetails.material}</p>
+      <p>Weight : ${bookingDetails.weight}</p>
+      <p>Truck : ${bookingDetails.trucks}</p>
+      <p>Date of Transport : ${bookingDetails.date}</p>
+      `,
+    };
+    transporter.sendMail(message, (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Email sent" + info.response);
+        res.redirect("/industrydashboard");
+      }
+    });
   });
 });
 
