@@ -295,3 +295,10 @@ h1 {
     font-size: 0.8rem;
   }
 }
+
+/* ======================== Bookings ========================== */
+
+.bookings-user {
+  font-size: 1.2rem;
+  text-align: center;
+}

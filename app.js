@@ -50,6 +50,14 @@ mongoose.connect(`${process.env.MONGOOSE_URL}`, {
 
 // Mongoose Schema
 
+const transactionsSchema = {
+  id: String,
+  status: String,
+  date: String,
+};
+
+const Transaction = mongoose.model("Transaction", transactionsSchema);
+
 const adminSchema = new mongoose.Schema({
   username: String,
   password: String,
@@ -63,6 +71,9 @@ const driverLoginSchema = new mongoose.Schema({
 const industryLoginSchema = new mongoose.Schema({
   username: String,
   password: String,
+  email: String,
+  phoneNo: String,
+  transactions: [transactionsSchema],
 });
 
 const driverSchema = new mongoose.Schema({
@@ -127,18 +138,6 @@ app.post("/search", (req, res) => {
 
   bookingDetails = { fromAddress, toAddress, material, weight, trucks, date };
 
-  // Driver.find({}, function (err, drivers) {
-  //   res.render("search", {
-  //     drivers,
-  //     fromAddress,
-  //     toAddress,
-  //     material,
-  //     weight,
-  //     trucks,
-  //     date,
-  //   });
-  // });
-
   Driver.find().then((drivers) => {
     res.render("search", {
       drivers,
@@ -165,6 +164,16 @@ app.get("/search/:id", (req, res) => {
   });
 });
 
+app.get("/pastbookings", (req, res) => {
+  if (req.isAuthenticated()) {
+    IndustryAcc.findOne({ username: `${req.user.username}` }, function (err, acc) {
+      res.render("pastBookings", {
+        user: acc,
+      });
+    });
+  }
+});
+
 // ============ Industry Login ==============
 
 app.get("/industrylogin", (req, res) => {
@@ -182,15 +191,19 @@ app.get("/industrydashboard", (req, res) => {
 });
 
 app.post("/industrysignin", (req, res) => {
-  IndustryAcc.register({ username: req.body.username }, req.body.password, function (err, user) {
-    if (err) {
-      console.log(err);
-    } else {
-      passport.authenticate("industryLocal")(req, res, function () {
-        res.redirect("/industrydashboard");
-      });
+  IndustryAcc.register(
+    { username: req.body.username, email: req.body.email, phoneNo: req.body.phoneNo },
+    req.body.password,
+    function (err, user) {
+      if (err) {
+        console.log(err);
+      } else {
+        passport.authenticate("industryLocal")(req, res, function () {
+          res.redirect("/industrydashboard");
+        });
+      }
     }
-  });
+  );
 });
 
 app.post("/industrylogin", function (req, res) {
@@ -431,6 +444,8 @@ app.post("/driveradd", (req, res) => {
 
 // ======================================================================================
 
+let paymentReceiptId;
+
 // Set your secret key. Remember to switch to your live secret key in production!
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 const Stripe = require("stripe");
@@ -452,14 +467,16 @@ app.post("/create-checkout-session", async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: `https://vlink-transport.herokuapp.com/success`,
+    success_url: `http://localhost:3000/success`,
     cancel_url: "https://example.com/cancel",
   });
+
+  paymentReceiptId = session.id;
 
   res.json({ id: session.id });
 });
 
-app.get("/success", (req, res) => {
+app.get("/success", async (req, res) => {
   Driver.findById(bookingId, function (err, driver) {
     var message = {
       from: "yashkadam872@gmail.com",
@@ -491,9 +508,80 @@ app.get("/success", (req, res) => {
         console.log(err);
       } else {
         console.log("Email sent" + info.response);
-        res.redirect("/industrydashboard");
       }
     });
+  });
+
+  const session = await stripe.checkout.sessions.retrieve(`${paymentReceiptId}`);
+
+  var d = new Date();
+  var months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const transaction = new Transaction({
+    id: session.payment_intent,
+    status: session.payment_status,
+    date: `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`,
+  });
+
+  IndustryAcc.findOne({ username: req.user.username }, function (err, foundAcc) {
+    foundAcc.transactions.push(transaction);
+    foundAcc.save();
+  });
+
+  let paymentReceipt = {
+    from: "yashkadam872@gmail.com",
+    to: `${req.user.email}`,
+    subject: `Booking Request confirmed from ${req.user.username}`,
+    html: `
+    <h2>${req.user.username}, we have recieved your Rs 2000/-</h2>
+
+    =======================================
+   <p> Payment Receipt</p>
+    =======================================
+   
+    <p> Receipt Id : ${session.payment_intent} </p>
+
+    <p> Payment Method : Card </p>
+
+    <p> Payment Status : ${session.payment_status} </p>
+
+    <p> Amount Total : Rs ${session.amount_total / 100}/- </p>
+
+    <p> Advance Payment of 2000/- has been done successfully.. </p>
+    <p> We'll contact you shortly.. </p>
+
+    ===========================
+    <p> Booking Details</p>
+    ===========================
+    <p>Pickup Address : ${bookingDetails.fromAddress}</p>
+    <p>Drop Address : ${bookingDetails.toAddress}</p>
+    <p>Material : ${bookingDetails.material}</p>
+    <p>Weight : ${bookingDetails.weight}</p>
+    <p>Truck : ${bookingDetails.trucks}</p>
+    <p>Date of Transport : ${bookingDetails.date}</p>
+    
+    `,
+  };
+  transporter.sendMail(paymentReceipt, (err, info) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Email sent" + info.response);
+      res.redirect("/industrydashboard");
+    }
   });
 });
 
