@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const fs = require("fs");
 const bodyParser = require("body-parser");
@@ -8,9 +10,6 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const nodemailer = require("nodemailer");
 const multer = require("multer");
-// const { nextTick } = require("process");
-const dotenv = require("dotenv");
-dotenv.config();
 
 const app = express();
 
@@ -73,6 +72,8 @@ const industryLoginSchema = new mongoose.Schema({
   password: String,
   email: String,
   phoneNo: String,
+  address: String,
+  companyName: String,
   transactions: [transactionsSchema],
 });
 
@@ -250,6 +251,7 @@ app.post("/industryverify", (req, res) => {
         <p>Name : ${req.body.fname}</p>
         <p>Email : ${req.body.email}</p>
         <p>Ph. Number : ${req.body.phNumber} </p>
+        <p>Address : ${req.body.address}</p>
         `,
         attachments: addedAttachments,
       };

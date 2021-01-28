@@ -44,7 +44,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/pastbookings">Past Bookings</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/logout">Log-Out</a>
@@ -58,14 +61,14 @@
     <div class="container">
       <h1>Welcome Industrialist, <%= currentUser.username %></h1>
       <hr />
-      <p>Verify your Identity with VLink Transport to get orders...</p>
+      <p>Verify your Identity with VLink Transport to place orders...</p>
 
       <form action="/industryverify" method="POST" enctype="multipart/form-data">
         <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
 
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Full Name </span>
+            <span class="input-group-text" id="inputGroup-sizing-default"> Comapany Name </span>
           </div>
           <input type="text" class="form-control" name="fname" />
         </div>
@@ -82,25 +85,21 @@
           </div>
           <input type="text" class="form-control" name="phNumber" />
         </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-default"> Address </span>
+          <textarea
+            class="form-control"
+            rows="5"
+            name="address"
+            aria-label="With textarea"
+          ></textarea>
+        </div>
         <!-- ? ================= 2nd Input Box using Bootstrap  =========================-->
         <div class="input-group mb-3">
           <div class="mb-3">
-            <label for="formFileMultiple" class="form-label">RC Book</label>
+            <label for="formFileMultiple" class="form-label">Documents</label>
             <input class="form-control" name="images" type="file" id="formFile" multiple />
-          </div>
-        </div>
-
-        <div class="input-group mb-3">
-          <div class="mb-3">
-            <label for="formFileMultiple" class="form-label">Insurance Papers</label>
-            <input class="form-control" type="file" id="formFileMultiple" name="images" />
-          </div>
-        </div>
-
-        <div class="input-group mb-3">
-          <div class="mb-3">
-            <label for="formFileMultiple" class="form-label">Driving License</label>
-            <input class="form-control" type="file" id="formFileMultiple" name="images" />
           </div>
         </div>
 
