@@ -58,7 +58,7 @@ h1 {
 
 @media (max-width: 450px) {
   .hero-title > h1 {
-    font-size: 2rem;
+    font-size: 1.7rem;
   }
 
   .hero-title > p {
@@ -272,14 +272,14 @@ h1 {
   }
 }
 
-@media (max-width: 325px) {
-  .end-data:nth-child(2) {
-    border-right: none;
-  }
-  .end-data:nth-child(3) {
-    border-right: 1px solid white;
-  }
-}
+/* @media (max-width: 325px) {
+    .end-data:nth-child(2) {
+      border-right: none;
+    }
+    .end-data:nth-child(3) {
+      border-right: 1px solid white;
+    }
+  } */
 
 /* ===========================    Foooterrrrrrrrr =========================== */
 
