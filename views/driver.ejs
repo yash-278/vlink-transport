@@ -23,7 +23,7 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
     <title>Vlink Transport</title>
   </head>
   <body>
@@ -56,7 +56,132 @@
     <br />
 
     <div class="container">
-      <h1>Welcome Driver, <%= currentUser.username %></h1>
+      <h2>Welcome Driver, <%= currentUser.username %></h2>
+
+      <hr />
+
+      <p>
+        Current Work Status : <% if (currentUser.status) { %> Available <% } else { %> Working <% }
+        %>
+      </p>
+      <div>
+        Set Status :
+        <a href="/updatestatus/available" class="btn btn-success">Available</a> |
+        <a href="/updatestatus/working" class="btn btn-danger">Working</a>
+      </div>
+
+      <hr />
+
+      <p>Name : <%= currentUser.name %></p>
+      <p>Phone Number : <%= currentUser.name %></p>
+      <p>Address : <%= currentUser.name %></p>
+      <p>Preffered Cities : <%= currentUser.preferredCities %></p>
+      <p>Fixed Route : <%= currentUser.fixedRoute %></p>
+      <p>Vehicle Type : <%= currentUser.vehicleType %></p>
+      <p>Vehicle Capacity : <%= currentUser.vehicleCapacity %></p>
+
+      <hr />
+
+      <div>
+        <button
+          type="button"
+          class="btn btn-dark"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Edit Profile Data
+        </button>
+      </div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Profile Data</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <form action="/drivereditprofile" method="POST">
+              <div class="modal-body">
+                <div class="mb-3">
+                  <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default">
+                        Preferred Cities
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="preferredCities"
+                      placeholder="Input preferred cities."
+                    />
+                  </div>
+
+                  <!-- ========================== -->
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default">
+                        Fixed Route
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="fixedRoute"
+                      placeholder="Your Fixed Route"
+                    />
+                  </div>
+                  <!-- ============================= -->
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default">
+                        Vehicle Type
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="vehicleType"
+                      placeholder="Your Vehicle Type"
+                    />
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text">Vehicle Capacity</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="vehicleCapacity"
+                      placeholder="Your Vehicle Capacity"
+                    />
+                  </div>
+
+                  <!-- ? ================= Button using Bootstrap  =========================-->
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button type="submit" class="btn btn-dark">Save changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
 
       <hr />
 
@@ -75,6 +200,6 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="index.js"></script>
+    <script src="/index.js"></script>
   </body>
 </html>

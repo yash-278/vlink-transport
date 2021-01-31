@@ -13,19 +13,6 @@ const multer = require("multer");
 
 const app = express();
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./images");
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${file.fieldname}-${Date.now()}-${file.originalname}`);
-  },
-});
-
-var upload = multer({
-  storage,
-}).array("images");
-
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -45,7 +32,23 @@ app.use(passport.session());
 mongoose.connect(`${process.env.MONGOOSE_URL}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
+
+// Disk Storage for Email System
+
+var diskStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./images");
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${file.fieldname}-${Date.now()}-${file.originalname}`);
+  },
+});
+
+var upload = multer({
+  diskStorage,
+}).array("images");
 
 // Mongoose Schema
 
@@ -65,6 +68,15 @@ const adminSchema = new mongoose.Schema({
 const driverLoginSchema = new mongoose.Schema({
   username: String,
   password: String,
+  name: String,
+  phoneNo: String,
+  address: String,
+  preferredCities: String,
+  fixedRoute: String,
+  vehicleType: String,
+  vehicleCapacity: String,
+  verified: Boolean,
+  status: Boolean,
 });
 
 const industryLoginSchema = new mongoose.Schema({
@@ -74,17 +86,8 @@ const industryLoginSchema = new mongoose.Schema({
   phoneNo: String,
   address: String,
   companyName: String,
+  verified: Boolean,
   transactions: [transactionsSchema],
-});
-
-const driverSchema = new mongoose.Schema({
-  name: String,
-  phoneNo: String,
-  address: String,
-  preferredCities: String,
-  fixedRoute: String,
-  vehicleType: String,
-  vehicleCapacity: String,
 });
 
 adminSchema.plugin(passportLocalMongoose);
@@ -94,7 +97,7 @@ industryLoginSchema.plugin(passportLocalMongoose);
 const Admin = new mongoose.model("Admin", adminSchema);
 const DriverAcc = new mongoose.model("DriverAcc", driverLoginSchema);
 const IndustryAcc = new mongoose.model("IndustryAcc", industryLoginSchema);
-const Driver = new mongoose.model("Driver", driverSchema);
+// const DriverAcc = new mongoose.model("DriverAcc", driverSchema);
 
 passport.use("adminLocal", Admin.createStrategy());
 passport.use("driverLocal", DriverAcc.createStrategy());
@@ -105,7 +108,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (user, done) {
-  if (user != null) done(null, user);
+  done(null, user);
 });
 
 let transporter = nodemailer.createTransport({
@@ -121,6 +124,8 @@ let transporter = nodemailer.createTransport({
 
 //  ============== GET / POST Requests =================
 
+// @route GET /
+// @desc Loads Homepage
 app.get("/", (req, res) => {
   res.render("homepage");
 });
@@ -139,7 +144,7 @@ app.post("/search", (req, res) => {
 
   bookingDetails = { fromAddress, toAddress, material, weight, trucks, date };
 
-  Driver.find().then((drivers) => {
+  DriverAcc.find({ status: true, verified: true }).then((drivers) => {
     res.render("search", {
       drivers,
       fromAddress,
@@ -158,7 +163,7 @@ app.get("/search/:id", (req, res) => {
   const id = req.params.id;
   bookingId = req.params.id;
 
-  Driver.findById(id, function (err, driver) {
+  DriverAcc.findById(id, function (err, driver) {
     res.render("driverProfile", {
       driver,
     });
@@ -191,6 +196,16 @@ app.get("/industrydashboard", (req, res) => {
   }
 });
 
+app.get("/industryprofile", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render("industryProfile", {
+      currentUser: req.user,
+    });
+  } else {
+    res.redirect("/industrydashboard");
+  }
+});
+
 app.post("/industrysignin", (req, res) => {
   IndustryAcc.register(
     { username: req.body.username, email: req.body.email, phoneNo: req.body.phoneNo },
@@ -208,12 +223,12 @@ app.post("/industrysignin", (req, res) => {
 });
 
 app.post("/industrylogin", function (req, res) {
-  const driver = new IndustryAcc({
+  const acc = new IndustryAcc({
     username: req.body.username,
     password: req.body.password,
   });
 
-  req.login(driver, function (err) {
+  req.login(acc, function (err) {
     if (err) {
       console.log(err);
     } else {
@@ -222,6 +237,30 @@ app.post("/industrylogin", function (req, res) {
       });
     }
   });
+});
+
+app.post("/industryeditprofile", function (req, res) {
+  if (req.isAuthenticated()) {
+    const id = req.user._id;
+    let params = {};
+    for (let prop in req.body) if (req.body[prop]) params[prop] = req.body[prop];
+
+    IndustryAcc.findByIdAndUpdate(id, params, function (err) {
+      IndustryAcc.findById(id, function (err, doc) {
+        req.logIn(doc, function (err1) {
+          if (err1) {
+            console.log("Error : " + err1);
+          } else {
+            res.render("industryProfile", {
+              currentUser: req.user,
+            });
+          }
+        });
+      });
+    });
+  } else {
+    res.redirect("/industrydashboard");
+  }
 });
 
 // ============ Industry Verify ==============
@@ -248,6 +287,7 @@ app.post("/industryverify", (req, res) => {
         to: "muzzamilvalor@gmail.com",
         subject: `Verification Application by ${req.body.fname}`,
         html: `
+        <p>ID : ${req.user._id}</p>
         <p>Name : ${req.body.fname}</p>
         <p>Email : ${req.body.email}</p>
         <p>Ph. Number : ${req.body.phNumber} </p>
@@ -277,7 +317,7 @@ app.post("/industryverify", (req, res) => {
     }
   });
 });
-// ============ Driver Login ===============
+// ============ DriverAcc Login ===============
 
 app.get("/driverlogin", (req, res) => {
   res.render("driverLogin");
@@ -323,7 +363,66 @@ app.post("/driverlogin", function (req, res) {
   });
 });
 
-// ============ Driver Verification ==========
+app.get("/updatestatus/:status", (req, res) => {
+  status = req.params.status;
+  console.log(status);
+  const id = req.user._id;
+  if (status === "available") {
+    DriverAcc.findByIdAndUpdate(id, { status: true }, function (err) {
+      DriverAcc.findById(id, function (err, doc) {
+        req.logIn(doc, function (err1) {
+          if (err1) {
+            console.log("Error : " + err1);
+          } else {
+            res.render("driver", {
+              currentUser: req.user,
+            });
+          }
+        });
+      });
+    });
+  } else {
+    DriverAcc.findByIdAndUpdate(id, { status: false }, function (err) {
+      DriverAcc.findById(id, function (err, doc) {
+        req.logIn(doc, function (err1) {
+          if (err1) {
+            console.log("Error : " + err1);
+          } else {
+            res.render("driver", {
+              currentUser: req.user,
+            });
+          }
+        });
+      });
+    });
+  }
+});
+
+app.post("/drivereditprofile", function (req, res) {
+  if (req.isAuthenticated()) {
+    const id = req.user._id;
+    let params = {};
+    for (let prop in req.body) if (req.body[prop]) params[prop] = req.body[prop];
+
+    DriverAcc.findByIdAndUpdate(id, params, function (err) {
+      DriverAcc.findById(id, function (err, doc) {
+        req.logIn(doc, function (err1) {
+          if (err1) {
+            console.log("Error : " + err1);
+          } else {
+            res.render("driver", {
+              currentUser: req.user,
+            });
+          }
+        });
+      });
+    });
+  } else {
+    res.redirect("/driver");
+  }
+});
+
+// ============ DriverAcc Verification ==========
 
 app.get("/driververify", (req, res) => {
   res.render("driverVerification", {
@@ -347,6 +446,7 @@ app.post("/driververify", (req, res) => {
         to: "muzzamilvalor@gmail.com",
         subject: `Verification Application by ${req.body.fname}`,
         html: `
+        <p>ID : ${req.user._id}</p>
         <p>Name : ${req.body.fname}</p>
         <p>Email : ${req.body.email}</p>
         <p>Ph. Number : ${req.body.phNumber} </p>
@@ -408,7 +508,7 @@ app.post("/adminlogin", function (req, res) {
   });
 });
 
-// ============ Add Driver Data ============
+// ============ Add DriverAcc Data ============
 
 app.get("/driver", (req, res) => {
   if (req.isAuthenticated()) {
@@ -419,6 +519,7 @@ app.get("/driver", (req, res) => {
 });
 
 app.post("/driveradd", (req, res) => {
+  const id = req.body.id;
   const name = req.body.driverName;
   const address = req.body.driverAddress;
   const phoneNo = req.body.driverNumber;
@@ -427,7 +528,7 @@ app.post("/driveradd", (req, res) => {
   const vehicleType = req.body.driverVehicle;
   const vehicleCapacity = req.body.driverCapacity;
 
-  const driver = new Driver({
+  const driver = {
     name,
     address,
     phoneNo,
@@ -435,13 +536,22 @@ app.post("/driveradd", (req, res) => {
     fixedRoute,
     vehicleType,
     vehicleCapacity,
-  });
+    verified: true,
+  };
 
-  driver.save(function (err) {
+  DriverAcc.findByIdAndUpdate(id, driver, function (err) {
     if (!err) {
       res.redirect("/admindashboard");
+    } else {
+      console.log(err);
     }
   });
+
+  // driver.save(function (err) {
+  //   if (!err) {
+  //     res.redirect("/admindashboard");
+  //   }
+  // });
 });
 
 // ======================================================================================
@@ -469,7 +579,7 @@ app.post("/create-checkout-session", async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: `http://localhost:3000/success`,
+    success_url: `https://vlink-transport.herokuapp.com/success`,
     cancel_url: "https://example.com/cancel",
   });
 
@@ -479,7 +589,7 @@ app.post("/create-checkout-session", async (req, res) => {
 });
 
 app.get("/success", async (req, res) => {
-  Driver.findById(bookingId, function (err, driver) {
+  DriverAcc.findById(bookingId, function (err, driver) {
     var message = {
       from: "yashkadam872@gmail.com",
       to: "muzzamilvalor@gmail.com",
@@ -487,13 +597,13 @@ app.get("/success", async (req, res) => {
       html: `
 
       <h2>${req.user.username} has paid : Rs 2000/-</h2>
-
+      <p>ID : ${req.user._id}</p>
       <p>Client Name : ${req.user.username}</p>
       =====================================================
-      Driver Details
+      DriverAcc Details
       =====================================================
-      <p>Driver Name : ${driver.name}</p>
-      <p>Driver Phone no. : ${driver.phoneNo}</p>
+      <p>DriverAcc Name : ${driver.name}</p>
+      <p>DriverAcc Phone no. : ${driver.phoneNo}</p>
       =====================================================
       Booking Details
       =====================================================

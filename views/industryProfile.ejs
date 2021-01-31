@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+
+    <link
+      href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Vlink Transport</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Vlink Transport</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/industryprofile"
+                >Your Profile</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/pastbookings">Past Bookings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/driverlogin">Login as Driver</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/logout">Log-Out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <br />
+
+    <div class="container">
+      <h2>Username : <%= currentUser.username %> <% if (currentUser.verified) { %> ✔️ <% } %></h2>
+
+      <hr />
+
+      <p>Company Name : <%= currentUser.companyName %></p>
+      <p>Phone No. : <%= currentUser.phoneNo %></p>
+      <p>E-mail : <%= currentUser.email %></p>
+      <p>Address : <%= currentUser.address %></p>
+      <hr />
+    </div>
+
+    <!-- Button trigger modal -->
+    <div class="d-flex justify-content-around">
+      <button
+        type="button"
+        class="btn btn-dark"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        Edit Profile Data
+      </button>
+    </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Profile Data</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form action="/industryeditprofile" method="POST">
+            <div class="modal-body">
+              <div class="mb-3">
+                <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">
+                      Company Name
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="companyName"
+                    placeholder="Company's Name"
+                  />
+                </div>
+
+                <!-- ========================== -->
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default"> Phone No. </span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="phoneNo"
+                    placeholder="Company's Phone No."
+                  />
+                </div>
+                <!-- ============================= -->
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default"> E-mail </span>
+                  </div>
+                  <input type="email" class="form-control" name="email" placeholder="E-mail" />
+                </div>
+
+                <div class="input-group mb-3">
+                  <span class="input-group-text">Address</span>
+                  <textarea
+                    class="form-control"
+                    aria-label="With textarea"
+                    placeholder=" Company's Address"
+                    name="address"
+                  ></textarea>
+                </div>
+
+                <!-- ? ================= Button using Bootstrap  =========================-->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-dark">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"
+    ></script>
+
+    <script type="text/javascript">
+      // Create an instance of the Stripe object with your publishable API key
+      var stripe = Stripe("pk_test_1eFAtsCZKFg17U3Yooh6e58y00kLjudBbP");
+      var checkoutButton = document.getElementById("checkout-button");
+
+      checkoutButton.addEventListener("click", function () {
+        // Create a new Checkout Session using the server-side endpoint you
+        // created in step 3.
+        fetch(`/create-checkout-session`, {
+          method: "POST",
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (session) {
+            return stripe.redirectToCheckout({ sessionId: session.id });
+          })
+          .then(function (result) {
+            // If `redirectToCheckout` fails due to a browser or network
+            // error, you should display the localized error message to your
+            // customer using `error.message`.
+            if (result.error) {
+              alert(result.error.message);
+            }
+          })
+          .catch(function (error) {
+            console.error("Error:", error);
+          });
+      });
+    </script>
+
+    <!-- <script src="index.js"></script> -->
+  </body>
+</html>

@@ -302,3 +302,11 @@ h1 {
   font-size: 1.2rem;
   text-align: center;
 }
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+}
+.profile-pic {
+  max-width: 300px;
+}
