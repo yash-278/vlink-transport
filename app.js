@@ -126,7 +126,7 @@ let transporter = nodemailer.createTransport({
   secure: 465,
   auth: {
     user: "yashkadam872@gmail.com",
-    pass: "9833379003",
+    pass: process.env.SMTP_PASS,
   },
 });
 
