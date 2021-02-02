@@ -44,7 +44,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/industrydashboard">Dashboard</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/industryprofile">Your Profile</a>
@@ -76,33 +79,29 @@
     </div>
     <br />
 
-    <div class="container">
-      <h1>Available Drivers</h1>
-      <hr />
-      <% drivers.forEach(function(driver){ %>
-      <div class="card mb-3" style="max-width: 540px">
-        <div class="row g-0">
-          <!-- <div class="col-md-4">
-              <img src="..." alt="..." />
-            </div> -->
-          <div class="col-md-8">
-            <a href="/search/<%= driver.id %>">
-              <div class="card-body">
-                <h5 class="card-title"><%= driver.name %></h5>
-                <p class="card-text">Vehicle Type : <%= driver.vehicleType %></p>
-                <p class="card-text">
-                  <small class="text-muted"
-                    >Vehicle Capacity : <%= driver.vehicleCapacity %>
-                  </small>
-                </p>
-              </div>
-            </a>
-          </div>
-          <br />
+    <div class="container mb-3">
+      <div class="card-group">
+        <% drivers.forEach(function(driver){ %>
+        <div class="card">
+          <a href="/search/<%= driver.id %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= driver.name %></h5>
+              <p class="card-text">Vehicle Type : <%= driver.vehicleType %></p>
+              <p class="card-text">Vehicle Capacity : <%= driver.vehicleCapacity %></p>
+
+              <p class="card-text">
+                <small class="text-muted">
+                  Average Rating: <% if ( driver.avgRating === undefined ) { %> 0 ⭐ <% } else { %>
+                  <%= driver.avgRating %> ⭐ <% } %>
+                </small>
+              </p>
+            </div>
+          </a>
         </div>
+        <% }); %>
       </div>
-      <% }); %>
     </div>
+    <br />
 
     <!-- JavaScript Bundle with Popper -->
 

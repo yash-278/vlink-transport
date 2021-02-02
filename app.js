@@ -58,7 +58,13 @@ const transactionsSchema = {
   date: String,
 };
 
+const ratingSchema = {
+  id: String,
+  rating: Number,
+};
+
 const Transaction = mongoose.model("Transaction", transactionsSchema);
+const Rating = mongoose.model("Rating", ratingSchema);
 
 const adminSchema = new mongoose.Schema({
   username: String,
@@ -77,6 +83,8 @@ const driverLoginSchema = new mongoose.Schema({
   vehicleCapacity: String,
   verified: Boolean,
   status: Boolean,
+  avgRating: String,
+  rating: [ratingSchema],
 });
 
 const industryLoginSchema = new mongoose.Schema({
@@ -144,7 +152,7 @@ app.post("/search", (req, res) => {
 
   bookingDetails = { fromAddress, toAddress, material, weight, trucks, date };
 
-  DriverAcc.find({ status: true, verified: true }).then((drivers) => {
+  DriverAcc.find({ status: true, verified: true }, function (err, drivers) {
     res.render("search", {
       drivers,
       fromAddress,
@@ -154,7 +162,7 @@ app.post("/search", (req, res) => {
       trucks,
       date,
     });
-  });
+  }).sort({ avgRating: -1 });
 });
 
 let bookingId = "";
@@ -334,16 +342,20 @@ app.get("/driverdashboard", (req, res) => {
 });
 
 app.post("/driversignin", (req, res) => {
-  DriverAcc.register({ username: req.body.username }, req.body.password, function (err, user) {
-    if (err) {
-      console.log(err);
-      // res.redirect("/driverlogin");
-    } else {
-      passport.authenticate("driverLocal")(req, res, function () {
-        res.redirect("/driverdashboard");
-      });
+  DriverAcc.register(
+    { username: req.body.username, rating: [], avgRating: 0 },
+    req.body.password,
+    function (err, user) {
+      if (err) {
+        console.log(err);
+        // res.redirect("/driverlogin");
+      } else {
+        passport.authenticate("driverLocal")(req, res, function () {
+          res.redirect("/driverdashboard");
+        });
+      }
     }
-  });
+  );
 });
 
 app.post("/driverlogin", function (req, res) {
@@ -420,6 +432,58 @@ app.post("/drivereditprofile", function (req, res) {
   } else {
     res.redirect("/driver");
   }
+});
+
+app.post("/setrating/:id", function (req, res) {
+  const driverId = req.params.id;
+  const accId = req.user._id;
+  const rating = req.body.rating;
+  console.log("Posted Req");
+  DriverAcc.findById(driverId, function (err, driver) {
+    function addNewRating() {
+      let newRating = {
+        id: accId,
+        rating: rating,
+      };
+      driver.rating.push(newRating);
+      console.log("New Rating");
+    }
+
+    function calcAvg(total) {
+      let avg = total / driver.rating.length;
+      return avg;
+    }
+
+    let accFound = false;
+
+    let currentAvgRating = 0;
+
+    for (let index = 0; index < driver.rating.length; index++) {
+      const currentDriverRating = driver.rating[index];
+
+      currentAvgRating += currentDriverRating.rating;
+
+      if (currentDriverRating.id === accId) {
+        console.log("Found Rating");
+        currentDriverRating.rating = rating;
+        accFound = true;
+      }
+    }
+
+    driver.avgRating = calcAvg(currentAvgRating);
+
+    if (accFound === false) {
+      addNewRating();
+    }
+
+    driver.save(function (err) {
+      console.log("Save");
+      console.log(err);
+      if (!err) {
+        res.redirect(`/search/${driverId}`);
+      }
+    });
+  });
 });
 
 // ============ DriverAcc Verification ==========
@@ -561,6 +625,7 @@ let paymentReceiptId;
 // Set your secret key. Remember to switch to your live secret key in production!
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 const Stripe = require("stripe");
+const { log } = require("console");
 const stripe = Stripe(`${process.env.STRIPE_SECRET_KEY}`);
 
 app.post("/create-checkout-session", async (req, res) => {
