@@ -140,7 +140,7 @@ app.get("/", (req, res) => {
 
 let bookingDetails;
 
-app.post("/search", (req, res) => {
+app.post("/search", ensureAuthenticated, (req, res) => {
   let fromAddress = req.body.fromAddress;
   let toAddress = req.body.toAddress;
   let date = req.body.date;
@@ -167,7 +167,7 @@ app.post("/search", (req, res) => {
 
 let bookingId = "";
 
-app.get("/search/:id", (req, res) => {
+app.get("/search/:id", ensureAuthenticated, (req, res) => {
   const id = req.params.id;
   bookingId = req.params.id;
 
@@ -178,14 +178,12 @@ app.get("/search/:id", (req, res) => {
   });
 });
 
-app.get("/pastbookings", (req, res) => {
-  if (req.isAuthenticated()) {
-    IndustryAcc.findOne({ username: `${req.user.username}` }, function (err, acc) {
-      res.render("pastBookings", {
-        user: acc,
-      });
+app.get("/pastbookings", ensureAuthenticated, (req, res) => {
+  IndustryAcc.findOne({ username: `${req.user.username}` }, function (err, acc) {
+    res.render("pastBookings", {
+      user: acc,
     });
-  }
+  });
 });
 
 // ============ Industry Login ==============
@@ -194,24 +192,16 @@ app.get("/industrylogin", (req, res) => {
   res.render("industryLogin");
 });
 
-app.get("/industrydashboard", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("industry", {
-      currentUser: req.user,
-    });
-  } else {
-    res.redirect("/industrylogin");
-  }
+app.get("/industrydashboard", ensureAuthenticated, (req, res) => {
+  res.render("industry", {
+    currentUser: req.user,
+  });
 });
 
-app.get("/industryprofile", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("industryProfile", {
-      currentUser: req.user,
-    });
-  } else {
-    res.redirect("/industrydashboard");
-  }
+app.get("/industryprofile", ensureAuthenticated, (req, res) => {
+  res.render("industryProfile", {
+    currentUser: req.user,
+  });
 });
 
 app.post("/industrysignin", (req, res) => {
@@ -247,39 +237,35 @@ app.post("/industrylogin", function (req, res) {
   });
 });
 
-app.post("/industryeditprofile", function (req, res) {
-  if (req.isAuthenticated()) {
-    const id = req.user._id;
-    let params = {};
-    for (let prop in req.body) if (req.body[prop]) params[prop] = req.body[prop];
+app.post("/industryeditprofile", ensureAuthenticated, function (req, res) {
+  const id = req.user._id;
+  let params = {};
+  for (let prop in req.body) if (req.body[prop]) params[prop] = req.body[prop];
 
-    IndustryAcc.findByIdAndUpdate(id, params, function (err) {
-      IndustryAcc.findById(id, function (err, doc) {
-        req.logIn(doc, function (err1) {
-          if (err1) {
-            console.log("Error : " + err1);
-          } else {
-            res.render("industryProfile", {
-              currentUser: req.user,
-            });
-          }
-        });
+  IndustryAcc.findByIdAndUpdate(id, params, function (err) {
+    IndustryAcc.findById(id, function (err, doc) {
+      req.logIn(doc, function (err1) {
+        if (err1) {
+          console.log("Error : " + err1);
+        } else {
+          res.render("industryProfile", {
+            currentUser: req.user,
+          });
+        }
       });
     });
-  } else {
-    res.redirect("/industrydashboard");
-  }
+  });
 });
 
 // ============ Industry Verify ==============
 
-app.get("/industryverify", (req, res) => {
+app.get("/industryverify", ensureAuthenticated, (req, res) => {
   res.render("industryVerification", {
     currentUser: req.user,
   });
 });
 
-app.post("/industryverify", (req, res) => {
+app.post("/industryverify", ensureAuthenticated, (req, res) => {
   upload(req, res, function (err) {
     if (err) {
       console.log(err);
@@ -331,14 +317,10 @@ app.get("/driverlogin", (req, res) => {
   res.render("driverLogin");
 });
 
-app.get("/driverdashboard", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("driver", {
-      currentUser: req.user,
-    });
-  } else {
-    res.redirect("/driverlogin");
-  }
+app.get("/driverdashboard", ensureAuthenticated, (req, res) => {
+  res.render("driver", {
+    currentUser: req.user,
+  });
 });
 
 app.post("/driversignin", (req, res) => {
@@ -375,7 +357,7 @@ app.post("/driverlogin", function (req, res) {
   });
 });
 
-app.get("/updatestatus/:status", (req, res) => {
+app.get("/updatestatus/:status", ensureAuthenticated, (req, res) => {
   status = req.params.status;
   console.log(status);
   const id = req.user._id;
@@ -410,31 +392,27 @@ app.get("/updatestatus/:status", (req, res) => {
   }
 });
 
-app.post("/drivereditprofile", function (req, res) {
-  if (req.isAuthenticated()) {
-    const id = req.user._id;
-    let params = {};
-    for (let prop in req.body) if (req.body[prop]) params[prop] = req.body[prop];
+app.post("/drivereditprofile", ensureAuthenticated, function (req, res) {
+  const id = req.user._id;
+  let params = {};
+  for (let prop in req.body) if (req.body[prop]) params[prop] = req.body[prop];
 
-    DriverAcc.findByIdAndUpdate(id, params, function (err) {
-      DriverAcc.findById(id, function (err, doc) {
-        req.logIn(doc, function (err1) {
-          if (err1) {
-            console.log("Error : " + err1);
-          } else {
-            res.render("driver", {
-              currentUser: req.user,
-            });
-          }
-        });
+  DriverAcc.findByIdAndUpdate(id, params, function (err) {
+    DriverAcc.findById(id, function (err, doc) {
+      req.logIn(doc, function (err1) {
+        if (err1) {
+          console.log("Error : " + err1);
+        } else {
+          res.render("driver", {
+            currentUser: req.user,
+          });
+        }
       });
     });
-  } else {
-    res.redirect("/driver");
-  }
+  });
 });
 
-app.post("/setrating/:id", function (req, res) {
+app.post("/setrating/:id", ensureAuthenticated, function (req, res) {
   const driverId = req.params.id;
   const accId = req.user._id;
   const rating = req.body.rating;
@@ -488,13 +466,13 @@ app.post("/setrating/:id", function (req, res) {
 
 // ============ DriverAcc Verification ==========
 
-app.get("/driververify", (req, res) => {
+app.get("/driververify", ensureAuthenticated, (req, res) => {
   res.render("driverVerification", {
     currentUser: req.user,
   });
 });
 
-app.post("/driververify", (req, res) => {
+app.post("/driververify", ensureAuthenticated, (req, res) => {
   upload(req, res, function (err) {
     if (err) {
       console.log(err);
@@ -547,12 +525,8 @@ app.get("/admin", (req, res) => {
   res.render("adminLogin");
 });
 
-app.get("/admindashboard", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("admin");
-  } else {
-    res.redirect("/admin");
-  }
+app.get("/admindashboard", ensureAuthenticated, (req, res) => {
+  res.render("admin");
 });
 
 app.post("/adminlogin", function (req, res) {
@@ -574,15 +548,11 @@ app.post("/adminlogin", function (req, res) {
 
 // ============ Add DriverAcc Data ============
 
-app.get("/driver", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("driverAdd");
-  } else {
-    res.redirect("/");
-  }
+app.get("/driver", ensureAuthenticated, (req, res) => {
+  res.render("driverAdd");
 });
 
-app.post("/driveradd", (req, res) => {
+app.post("/driveradd", ensureAuthenticated, (req, res) => {
   const id = req.body.id;
   const name = req.body.driverName;
   const address = req.body.driverAddress;
@@ -628,7 +598,7 @@ const Stripe = require("stripe");
 const { log } = require("console");
 const stripe = Stripe(`${process.env.STRIPE_SECRET_KEY}`);
 
-app.post("/create-checkout-session", async (req, res) => {
+app.post("/create-checkout-session", ensureAuthenticated, async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: [
@@ -766,6 +736,13 @@ app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
 });
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/");
+}
 
 let port = process.env.PORT;
 if (port == null || port == "") {

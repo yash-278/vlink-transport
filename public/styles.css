@@ -96,10 +96,10 @@ h1 {
 /* ================================ Services Section ================================ */
 
 .services {
-  background-color: #112d4e;
+  background-color: #fff;
   padding: 3em;
   text-align: center;
-  color: white;
+  color: black;
 }
 
 .services > .container > h1 {
