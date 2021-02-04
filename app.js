@@ -631,6 +631,31 @@ app.post("/create-checkout-session", ensureAuthenticated, async (req, res) => {
   res.json({ id: session.id });
 });
 
+app.post("/sendmail", (req, res) => {
+  var message = {
+    from: "yashkadam872@gmail.com",
+    to: "muzzamilvalor@gmail.com",
+    subject: `Feedback form from ${req.body.name}`,
+    html: `
+   <p> Name : ${req.body.name} </p>
+   <p> Email : ${req.body.email} </p>
+
+   <p> Subject : ${req.body.subject} </p>
+
+   <p> Message : ${req.body.message} </p>
+    `,
+  };
+
+  transporter.sendMail(message, (err, info) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Email sent" + info.response);
+      res.redirect("/");
+    }
+  });
+});
+
 app.get("/success", async (req, res) => {
   DriverAcc.findById(bookingId, function (err, driver) {
     var message = {

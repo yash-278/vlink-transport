@@ -78,20 +78,29 @@ h4 {
   text-align: center;
   padding: 4em 1em;
 }
-.welcome > h1 {
+
+.headline {
+  /* border-bottom: #112d4e 2px solid; */
+  margin-bottom: 1em;
+}
+.welcome-div > h1 {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 2.4rem;
 }
 
-.welcome > p {
+.welcome-div > h3 {
+  padding-top: 1em;
+}
+
+.welcome-div > p {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2em;
+  /* padding: 0 1em; */
 }
 
 @media (max-width: 450px) {
-  .welcome > h1 {
+  .welcome-div > h1 {
     font-size: 2rem;
   }
 }
@@ -313,3 +322,5 @@ h4 {
 .profile-pic {
   max-width: 300px;
 }
+
+/* Form */
