@@ -61,20 +61,30 @@
       <form action="/industrylogin" method="POST">
         <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Username </span>
-          </div>
-          <input type="text" class="form-control" name="username" />
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="username"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Username</label>
         </div>
 
         <!-- ? ================= 2nd Input Box using Bootstrap  =========================-->
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Password </span>
-          </div>
-          <input type="password" class="form-control" name="password" />
+
+        <div class="form-floating">
+          <input
+            type="password"
+            class="form-control"
+            id="floatingPassword"
+            name="password"
+            placeholder="Password"
+          />
+          <label for="floatingPassword">Password</label>
         </div>
+        <br />
 
         <!-- ? ================= Button using Bootstrap  =========================-->
         <button type="submit" class="btn btn-block btn-dark">Login As Industrialist</button>
@@ -83,40 +93,59 @@
       <h3>Don't have a Account? Sign Up now!</h3>
       <form action="/industrysignin" method="POST">
         <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
-
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Username </span>
-          </div>
-          <input type="text" class="form-control" name="username" required />
+        <br />
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="username"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Username</label>
         </div>
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> E-mail </span>
-          </div>
-          <input type="email" class="form-control" name="email" required />
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="email"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Email address</label>
         </div>
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Phone Number </span>
-          </div>
-          <input type="text" class="form-control" name="phoneNo" required />
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="phoneNo"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Phone Number</label>
         </div>
 
         <!-- ? ================= 2nd Input Box using Bootstrap  =========================-->
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Password </span>
-          </div>
-          <input type="password" class="form-control" name="password" required />
+        <div class="form-floating">
+          <input
+            type="password"
+            class="form-control"
+            id="floatingPassword"
+            name="password"
+            placeholder="Password"
+          />
+          <label for="floatingPassword">Password</label>
         </div>
+        <br />
 
         <!-- ? ================= Button using Bootstrap  =========================-->
         <button type="submit" class="btn btn-block btn-dark">Sign-Up As Industrialist</button>
       </form>
     </div>
+
+    <br />
 
     <!-- JavaScript Bundle with Popper -->
 

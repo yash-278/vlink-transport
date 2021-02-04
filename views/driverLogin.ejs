@@ -61,44 +61,64 @@
       <form action="/driverlogin" method="POST">
         <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Username </span>
-          </div>
-          <input type="text" class="form-control" name="username" />
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="username"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Username</label>
         </div>
 
         <!-- ? ================= 2nd Input Box using Bootstrap  =========================-->
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Password </span>
-          </div>
-          <input type="password" class="form-control" name="password" />
+
+        <div class="form-floating">
+          <input
+            type="password"
+            class="form-control"
+            id="floatingPassword"
+            name="password"
+            placeholder="Password"
+          />
+          <label for="floatingPassword">Password</label>
         </div>
+        <br />
 
         <!-- ? ================= Button using Bootstrap  =========================-->
         <button type="submit" class="btn btn-block btn-dark">Login As Driver</button>
       </form>
       <hr />
-      <h3>Don't have a Account? Sign Up now!</h3>
+      <h3>Sign Up, for a new Account !</h3>
+      <br />
       <form action="/driversignin" method="POST">
         <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Username </span>
-          </div>
-          <input type="text" class="form-control" name="username" />
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="username"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Username</label>
         </div>
 
         <!-- ? ================= 2nd Input Box using Bootstrap  =========================-->
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"> Password </span>
-          </div>
-          <input type="password" class="form-control" name="password" />
+        <div class="form-floating">
+          <input
+            type="password"
+            class="form-control"
+            id="floatingPassword"
+            name="password"
+            placeholder="Password"
+          />
+          <label for="floatingPassword">Password</label>
         </div>
 
+        <br />
         <!-- ? ================= Button using Bootstrap  =========================-->
         <button type="submit" class="btn btn-block btn-dark">Sign-Up As Driver</button>
       </form>

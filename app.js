@@ -138,6 +138,14 @@ app.get("/", (req, res) => {
   res.render("homepage");
 });
 
+app.get("/about", (req, res) => {
+  res.render("about-us");
+});
+
+app.get("/contact", (req, res) => {
+  res.render("contact-us");
+});
+
 let bookingDetails;
 
 app.post("/search", ensureAuthenticated, (req, res) => {
