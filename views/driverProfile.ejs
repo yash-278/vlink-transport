@@ -67,43 +67,73 @@
     <br />
 
     <div class="container">
-      <h1>Driver Profile : <%= driver.name %></h1>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Driver Profile : <%= driver.name %></h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            Average Rating: <% if ( driver.avgRating === undefined ) { %> 0 ⭐ <% } else { %> <%=
+            driver.avgRating %> ⭐ <% } %>
+          </h6>
 
-      <hr />
+          <hr />
 
-      <p>Preferred Cities : <%= driver.preferredCities %></p>
-      <p>Fixed Route : <%= driver.fixedRoute %></p>
-      <p>Vehicle Type : <%= driver.vehicleType %></p>
-      <p>Vehicle Capacity : <%= driver.vehicleCapacity %></p>
-      <p>Average rating : <%= driver.avgRating %></p>
-      <hr />
+          <p class="card-text">Preferred Cities : <%= driver.preferredCities %></p>
+          <p class="card-text">Fixed Route : <%= driver.fixedRoute %></p>
+          <p class="card-text">Vehicle Type : <%= driver.vehicleType %></p>
+          <p class="card-text">Vehicle Capacity : <%= driver.vehicleCapacity %></p>
 
-      <form action="/setrating/<%= driver._id %> " method="POST">
-        <label for="customRange3" class="form-label">Rating</label>
-        <input type="range" name="rating" class="form-range" min="1" max="5" id="customRange3" />
+          <hr />
 
-        <button type="submit" class="btn btn-success">Set Rating</button>
-      </form>
+          <form action="/setrating/<%= driver._id %> " method="POST">
+            <!-- <label for="customRange3" class="form-label">Rating</label>
+            <input
+              type="range"
+              name="rating"
+              class="form-range"
+              min="1"
+              max="5"
+              value="<%= driver.avgRating %>"
+              id="customRange3"
+              list="tickmarks"
+            /> -->
 
-      <hr />
-      <div class="d-flex justify-content-center">
-        <form>
-          <input
-            class="btn btn-danger me-5"
-            type="button"
-            value="Go back!"
-            onclick="history.back()"
-          />
-        </form>
+            <div class="range-wrap">
+              <input
+                type="range"
+                name="rating"
+                class="form-range range"
+                min="1"
+                max="5"
+                value="<%= driver.avgRating %>"
+                id="customRange3"
+              />
+              <output class="bubble">⭐</output>
+            </div>
 
-        <!-- <form action="driver.id/bookdriver" method="POST"> -->
-        <!-- <button class="btn btn-success" type="submit">Book Driver</button> -->
+            <button type="submit" class="btn btn-success">Set Rating</button>
+          </form>
 
-        <button type="button" class="btn btn-success" id="checkout-button">
-          Pay & Book Driver
-        </button>
+          <hr />
+
+          <div class="d-flex justify-content-center">
+            <form>
+              <input
+                class="btn btn-danger me-5"
+                type="button"
+                value="Go back!"
+                onclick="history.back()"
+              />
+            </form>
+
+            <!-- <form action="driver.id/bookdriver" method="POST"> -->
+            <!-- <button class="btn btn-success" type="submit">Book Driver</button> -->
+
+            <button type="button" class="btn btn-success" id="checkout-button">
+              Pay & Book Driver
+            </button>
+          </div>
+        </div>
       </div>
-      <hr />
     </div>
 
     <!-- JavaScript Bundle with Popper -->
@@ -119,6 +149,27 @@
     ></script>
 
     <script type="text/javascript">
+      const allRanges = document.querySelectorAll(".range-wrap");
+      allRanges.forEach((wrap) => {
+        const range = wrap.querySelector(".range");
+        const bubble = wrap.querySelector(".bubble");
+
+        range.addEventListener("input", () => {
+          setBubble(range, bubble);
+        });
+        setBubble(range, bubble);
+      });
+
+      function setBubble(range, bubble) {
+        const val = range.value;
+        const min = range.min ? range.min : 0;
+        const max = range.max ? range.max : 100;
+        const newVal = Number(((val - min) * 100) / (max - min));
+        bubble.innerHTML = val + " ⭐";
+
+        // Sorta magic numbers based on size of the native UI thumb
+        bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
+      }
       // Create an instance of the Stripe object with your publishable API key
       var stripe = Stripe("pk_test_1eFAtsCZKFg17U3Yooh6e58y00kLjudBbP");
       var checkoutButton = document.getElementById("checkout-button");
