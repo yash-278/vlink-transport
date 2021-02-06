@@ -71,8 +71,8 @@
     </nav>
     <br />
 
-    <div class="container">
-      <h2>Username : <%= currentUser.username %> <% if (currentUser.verified) { %> ✔️ <% } %></h2>
+    <div class="container my-4">
+      <!-- <h2>Username : <%= currentUser.username %> <% if (currentUser.verified) { %> ✔️ <% } %></h2>
 
       <hr />
 
@@ -80,96 +80,124 @@
       <p>Phone No. : <%= currentUser.phoneNo %></p>
       <p>E-mail : <%= currentUser.email %></p>
       <p>Address : <%= currentUser.address %></p>
-      <hr />
-    </div>
+      <hr /> -->
 
-    <!-- Button trigger modal -->
-    <div class="d-flex justify-content-around">
-      <button
-        type="button"
-        class="btn btn-dark"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        Edit Profile Data
-      </button>
-    </div>
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Profile Data</h5>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3">
+            Username : <%= currentUser.username %> <% if (currentUser.verified) { %> ✔️ <% } %>
+          </h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            Company Name : <%= currentUser.companyName %>
+          </h6>
+
+          <hr />
+          <p class="card-text">Phone No. : <%= currentUser.phoneNo %></p>
+          <p class="card-text">E-mail : <%= currentUser.email %></p>
+          <p class="card-text">Address : <%= currentUser.address %></p>
+
+          <hr />
+          <!-- Button trigger modal -->
+          <div class="d-flex justify-content-around">
             <button
               type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+              class="btn btn-dark"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Edit Profile Data
+            </button>
           </div>
-          <form action="/industryeditprofile" method="POST">
-            <div class="modal-body">
-              <div class="mb-3">
-                <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit Profile Data</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <form action="/industryeditprofile" method="POST">
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
 
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">
-                      Company Name
-                    </span>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-default">
+                            Company Name
+                          </span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="companyName"
+                          placeholder="Company's Name"
+                        />
+                      </div>
+
+                      <!-- ========================== -->
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-default">
+                            Phone No.
+                          </span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="phoneNo"
+                          placeholder="Company's Phone No."
+                        />
+                      </div>
+                      <!-- ============================= -->
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-default">
+                            E-mail
+                          </span>
+                        </div>
+                        <input
+                          type="email"
+                          class="form-control"
+                          name="email"
+                          placeholder="E-mail"
+                        />
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">Address</span>
+                        <textarea
+                          class="form-control"
+                          aria-label="With textarea"
+                          placeholder=" Company's Address"
+                          name="address"
+                        ></textarea>
+                      </div>
+
+                      <!-- ? ================= Button using Bootstrap  =========================-->
+                    </div>
                   </div>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="companyName"
-                    placeholder="Company's Name"
-                  />
-                </div>
-
-                <!-- ========================== -->
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default"> Phone No. </span>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      Close
+                    </button>
+                    <button type="submit" class="btn btn-dark">Save changes</button>
                   </div>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="phoneNo"
-                    placeholder="Company's Phone No."
-                  />
-                </div>
-                <!-- ============================= -->
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default"> E-mail </span>
-                  </div>
-                  <input type="email" class="form-control" name="email" placeholder="E-mail" />
-                </div>
-
-                <div class="input-group mb-3">
-                  <span class="input-group-text">Address</span>
-                  <textarea
-                    class="form-control"
-                    aria-label="With textarea"
-                    placeholder=" Company's Address"
-                    name="address"
-                  ></textarea>
-                </div>
-
-                <!-- ? ================= Button using Bootstrap  =========================-->
+                </form>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-dark">Save changes</button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
