@@ -47,7 +47,7 @@
               <a class="nav-link" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/industrydashboard">Dashboard</a>
+              <a class="nav-link" aria-current="page" href="/profiledashboard">Dashboard</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/industryprofile">Your Profile</a>
@@ -144,8 +144,9 @@
       </form>
 
       <hr />
-
+      <% if (!currentUser.verified) { %>
       <a href="/industryverify" class="btn btn-dark">Apply for Verification</a>
+      <% } %>
     </div>
 
     <!-- JavaScript Bundle with Popper -->

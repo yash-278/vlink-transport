@@ -200,6 +200,12 @@ app.get("/industrylogin", (req, res) => {
   res.render("industryLogin");
 });
 
+app.get("/profiledashboard", ensureAuthenticated, (req, res) => {
+  res.render("profileDashboard", {
+    currentUser: req.user,
+  });
+});
+
 app.get("/industrydashboard", ensureAuthenticated, (req, res) => {
   res.render("industry", {
     currentUser: req.user,
@@ -221,7 +227,7 @@ app.post("/industrysignin", (req, res) => {
         console.log(err);
       } else {
         passport.authenticate("industryLocal")(req, res, function () {
-          res.redirect("/industrydashboard");
+          res.redirect("/profiledashboard");
         });
       }
     }
@@ -239,7 +245,7 @@ app.post("/industrylogin", function (req, res) {
       console.log(err);
     } else {
       passport.authenticate("industryLocal")(req, res, function () {
-        res.redirect("/industrydashboard");
+        res.redirect("/profiledashboard");
       });
     }
   });
