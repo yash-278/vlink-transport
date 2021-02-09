@@ -81,6 +81,7 @@ const driverLoginSchema = new mongoose.Schema({
   fixedRoute: String,
   vehicleType: String,
   vehicleCapacity: String,
+  licensePlate: String,
   verified: Boolean,
   status: Boolean,
   avgRating: String,
@@ -506,6 +507,7 @@ app.post("/driververify", ensureAuthenticated, (req, res) => {
         <p>Name : ${req.body.fname}</p>
         <p>Email : ${req.body.email}</p>
         <p>Ph. Number : ${req.body.phNumber} </p>
+        <p>License Plate Number : ${req.body.licenseNumber}</p>
         `,
         attachments: addedAttachments,
       };
@@ -571,6 +573,7 @@ app.post("/driveradd", ensureAuthenticated, (req, res) => {
   const name = req.body.driverName;
   const address = req.body.driverAddress;
   const phoneNo = req.body.driverNumber;
+  const licensePlate = req.body.licenseNumber;
   const preferredCities = req.body.driverPreference;
   const fixedRoute = req.body.driverRoute;
   const vehicleType = req.body.driverVehicle;
@@ -584,6 +587,7 @@ app.post("/driveradd", ensureAuthenticated, (req, res) => {
     fixedRoute,
     vehicleType,
     vehicleCapacity,
+    licensePlate,
     verified: true,
   };
 
@@ -594,12 +598,6 @@ app.post("/driveradd", ensureAuthenticated, (req, res) => {
       console.log(err);
     }
   });
-
-  // driver.save(function (err) {
-  //   if (!err) {
-  //     res.redirect("/admindashboard");
-  //   }
-  // });
 });
 
 // ======================================================================================

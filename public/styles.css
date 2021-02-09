@@ -19,7 +19,8 @@ h4 {
 }
 
 .navigation {
-  background-color: #112d4e !important;
+  /* background-color: #112d4e !important; */
+  background-image: linear-gradient(#112d4e, #215680);
   /* background-color: transparent; */
 }
 
