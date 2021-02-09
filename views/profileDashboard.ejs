@@ -29,7 +29,7 @@
     <title>Vlink Transport</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">Vlink Transport</a>
         <button
@@ -82,10 +82,11 @@
       <p>Address : <%= currentUser.address %></p>
       <hr /> -->
 
-      <div class="card my-2">
+      <div class="card border-primary my-2">
         <div class="card-body">
           <h5 class="card-title mb-3">
-            Username : <%= currentUser.username %> <% if (currentUser.verified) { %> ✔️ <% } %>
+            Username : <%= currentUser.username %> <% if (currentUser.verified) { %>
+            <i class="bi bi-patch-check-fill text-primary"></i> <% } %>
           </h5>
           <h6 class="card-subtitle mb-2 text-muted">
             Company Name : <%= currentUser.companyName %>
@@ -96,34 +97,39 @@
           <p class="card-text">E-mail : <%= currentUser.email %></p>
           <p class="card-text">Address : <%= currentUser.address %></p> -->
 
-          <hr />
+          <hr style="color: #0d6efd" />
           <div class="mx-auto" style="width: 143px">
-            <a href="/industrydashboard" class="btn btn-dark">Search for Trucks</a>
+            <a href="/industrydashboard" class="btn btn-primary">Search for Trucks</a>
           </div>
         </div>
       </div>
-      <div class="card my-2">
+      <div class="card text-white bg-success my-2">
         <div class="card-body">
-          <h5 class="card-title mb-3">Safety First</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Your safety is our utmost priority.</h6>
+          <p class="card-title fs-5 fw-bold mb-3">
+            Safety First <i class="bi bi-shield-fill px-2"></i>
+          </p>
+
+          <h6 class="card-subtitle mb-2">Your safety is our utmost priority.</h6>
           <p class="card-text">
             We are taking strict measures to ensure safety of everyone around us.
           </p>
         </div>
       </div>
       <p class="mid-titles my-3">WHY CHOOSE VLINK TRANSPORT</p>
-      <div class="card my-2">
+      <div class="card text-white bg-primary my-2">
         <div class="card-body">
-          <h5 class="card-title mb-3">Maximum Choice</h5>
-          <h6 class="card-subtitle mb-2 text-muted">
+          <h5 class="card-title mb-3">
+            Maximum Choice <i class="bi bi-hand-thumbs-up-fill px-2"></i>
+          </h5>
+          <h6 class="card-subtitle mb-2">
             We give you the widest number of transport options across thousands of routes.
           </h6>
         </div>
       </div>
-      <div class="card my-2">
+      <div class="card text-white bg-primary my-2">
         <div class="card-body">
-          <h5 class="card-title mb-3">Superior Customer Service</h5>
-          <h6 class="card-subtitle mb-2 text-muted">
+          <h5 class="card-title mb-3">Superior Customer Service <i class="bi bi-headset"></i></h5>
+          <h6 class="card-subtitle mb-2">
             We put our experience and relationships to good use & solve your transport issues.
           </h6>
         </div>

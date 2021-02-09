@@ -29,7 +29,7 @@
     <title>Vlink Transport</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">Vlink Transport</a>
         <button
@@ -82,26 +82,27 @@
       <p>Address : <%= currentUser.address %></p>
       <hr /> -->
 
-      <div class="card">
+      <div class="card border-primary">
         <div class="card-body">
           <h5 class="card-title mb-3">
-            Username : <%= currentUser.username %> <% if (currentUser.verified) { %> ✔️ <% } %>
+            Username : <%= currentUser.username %> <% if (currentUser.verified) { %>
+            <i class="bi bi-patch-check-fill text-primary"></i><% } %>
           </h5>
           <h6 class="card-subtitle mb-2 text-muted">
             Company Name : <%= currentUser.companyName %>
           </h6>
 
-          <hr />
+          <hr style="color: #0d6efd" />
           <p class="card-text">Phone No. : <%= currentUser.phoneNo %></p>
           <p class="card-text">E-mail : <%= currentUser.email %></p>
           <p class="card-text">Address : <%= currentUser.address %></p>
 
-          <hr />
+          <hr style="color: #0d6efd" />
           <!-- Button trigger modal -->
           <div class="d-flex justify-content-around">
             <button
               type="button"
-              class="btn btn-dark"
+              class="btn btn-primary"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
             >
@@ -192,7 +193,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                       Close
                     </button>
-                    <button type="submit" class="btn btn-dark">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                   </div>
                 </form>
               </div>
