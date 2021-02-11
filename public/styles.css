@@ -21,6 +21,8 @@ h4 {
 .navigation {
   /* background-color: #112d4e !important; */
   background-image: linear-gradient(#112d4e, #215680);
+  /* background-image: linear-gradient(#0c2641, #0c2648); */
+
   /* background-color: transparent; */
 }
 
@@ -126,7 +128,7 @@ h4 {
 }
 .card {
   /* background-color: transparent !important; */
-  /* padding: 3em; */
+  padding: 3em;
 }
 .card-body > h5 {
   font-family: "Montserrat", sans-serif;
