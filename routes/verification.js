@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
-const nodemailer = require("nodemailer");
 const path = require("path");
 const multer = require("multer");
+
+const transporter = require("../utils/transporter");
 
 const DriverAcc = require("../models/driverModel");
 const IndustryAcc = require("../models/industryModel");
@@ -18,17 +19,6 @@ var storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, `${file.fieldname}-${Date.now()}-${file.originalname}`);
-  },
-});
-
-var transporter = nodemailer.createTransport({
-  service: "gmail",
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: 465,
-  auth: {
-    user: "yashkadam872@gmail.com",
-    pass: `${process.env.SMTP_PASS}`,
   },
 });
 

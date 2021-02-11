@@ -2,7 +2,9 @@ let bookingDetails;
 
 let bookingId;
 
-exports.getBookingId = () => bookingId;
+exports.getBookingId = () => {
+  return bookingId;
+};
 
 exports.setBookingId = (id) => (bookingId = id);
 

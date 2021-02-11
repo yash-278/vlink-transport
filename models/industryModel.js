@@ -8,8 +8,6 @@ const transactionsSchema = {
   date: String,
 };
 
-const Transaction = mongoose.model("Transaction", transactionsSchema);
-
 const industryLoginSchema = new mongoose.Schema({
   username: String,
   password: String,
