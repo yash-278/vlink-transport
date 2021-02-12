@@ -6,8 +6,7 @@ const bodyParser = require("body-parser");
 let ejs = require("ejs");
 const mongoose = require("mongoose");
 const session = require("express-session");
-
-const ensureAuthenticated = require("./utils/authenticated");
+const MongoStore = require("connect-mongo")(session);
 
 const app = express();
 
@@ -16,19 +15,20 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(
-  session({
-    secret: "My little vLink database secret",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-
 mongoose.connect(`${process.env.MONGOOSE_URL}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
 });
+
+app.use(
+  session({
+    secret: "My little vLink database secret",
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  })
+);
 
 const adminRouter = require("./routes/admin.js");
 const driverRouter = require("./routes/driver.js");
