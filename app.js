@@ -90,7 +90,7 @@ app.post("/create-checkout-session", ensureAuthenticated, async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: `http://localhost:3000/success`,
+    success_url: `https://vlink-transport.herokuapp.com/success`,
     cancel_url: "https://vlink-transport.herokuapp.com/profiledashboard",
   });
 
