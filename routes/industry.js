@@ -80,4 +80,12 @@ router.post("/industryeditprofile", ensureAuthenticated, function (req, res) {
   });
 });
 
+router.get("/pastbookings", ensureAuthenticated, (req, res) => {
+  IndustryAcc.findOne({ username: `${req.user.username}` }, function (err, acc) {
+    res.render("pastBookings", {
+      user: acc,
+    });
+  });
+});
+
 module.exports = router;

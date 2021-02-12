@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 let ejs = require("ejs");
 const mongoose = require("mongoose");
 const session = require("express-session");
-const ensureAuthenticated = require("./utils/authenticated");
 
 const app = express();
 
@@ -59,14 +58,6 @@ app.get("/about", (req, res) => {
 
 app.get("/contact", (req, res) => {
   res.render("contact-us");
-});
-
-app.get("/pastbookings", ensureAuthenticated, (req, res) => {
-  IndustryAcc.findOne({ username: `${req.user.username}` }, function (err, acc) {
-    res.render("pastBookings", {
-      user: acc,
-    });
-  });
 });
 
 // ======================================================================================

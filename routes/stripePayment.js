@@ -31,8 +31,8 @@ router.post("/create-checkout-session", ensureAuthenticated, async (req, res) =>
       },
     ],
     mode: "payment",
-    success_url: `http://localhost:3000/success`,
-    cancel_url: "https://example.com/cancel",
+    success_url: `https://vlink-transport.herokuapp.com/success`,
+    cancel_url: "https://vlink-transport.herokuapp.com/profiledashboard",
   });
 
   paymentReceiptId = session.id;
