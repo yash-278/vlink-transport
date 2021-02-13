@@ -35,7 +35,6 @@ const driverRouter = require("./routes/driver.js");
 const industryRouter = require("./routes/industry.js");
 const searchRouter = require("./routes/search.js");
 const verificationRouter = require("./routes/verification.js");
-// const paymentRouter = require("./routes/stripePayment.js");
 
 require("./auth/passport.js")(app);
 
@@ -44,7 +43,6 @@ app.use(driverRouter);
 app.use(industryRouter);
 app.use(searchRouter);
 app.use(verificationRouter);
-// app.use(paymentRouter);
 
 //  ============== GET / POST Requests =================
 

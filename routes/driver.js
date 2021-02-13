@@ -3,10 +3,14 @@ const router = express.Router();
 const passport = require("passport");
 const DriverAcc = require("../models/driverModel");
 
-const ensureAuthenticated = require("../utils/authenticated.js");
+const ensureAuthenticated = require("../utils/driverAuthenticated");
 
 router.get("/driverlogin", (req, res) => {
-  res.render("driverLogin");
+  if (ensureAuthenticated) {
+    res.redirect("/driverdashboard");
+  } else {
+    res.render("driverLogin");
+  }
 });
 
 router.get("/driverdashboard", ensureAuthenticated, (req, res) => {

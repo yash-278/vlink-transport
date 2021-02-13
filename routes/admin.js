@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const Admin = require("../models/adminModel");
 const DriverAcc = require("../models/driverModel");
+const IndustryAcc = require("../models/industryModel");
 
 const ensureAuthenticated = require("../utils/authenticated");
 
@@ -33,6 +34,22 @@ router.post("/adminlogin", (req, res) => {
 
 router.get("/driver", ensureAuthenticated, (req, res) => {
   res.render("driverAdd");
+});
+
+router.get("/addIndustry", ensureAuthenticated, (req, res) => {
+  res.render("addIndustry");
+});
+
+router.post("/addIndustry", ensureAuthenticated, (req, res) => {
+  const id = req.body.id;
+
+  IndustryAcc.findByIdAndUpdate(id, { verified: true }, function (err) {
+    if (!err) {
+      res.redirect("/admindashboard");
+    } else {
+      console.log(err);
+    }
+  });
 });
 
 router.post("/driveradd", ensureAuthenticated, (req, res) => {

@@ -6,10 +6,14 @@ const DriverAcc = require("../models/driverModel");
 const Transaction = require("../models/transactionModel");
 const transporter = require("../utils/transporter");
 
-const ensureAuthenticated = require("../utils/authenticated.js");
+const ensureAuthenticated = require("../utils/industryAuthenticated");
 
 router.get("/industrylogin", (req, res) => {
-  res.render("industryLogin");
+  if (ensureAuthenticated) {
+    res.redirect("/profiledashboard");
+  } else {
+    res.render("industryLogin");
+  }
 });
 
 router.get("/profiledashboard", ensureAuthenticated, (req, res) => {

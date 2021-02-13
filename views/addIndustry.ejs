@@ -44,16 +44,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/profiledashboard">Dashboard</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/industryprofile">Your Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/pastbookings">Past Bookings</a>
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/logout">Log-Out</a>
@@ -65,46 +56,22 @@
     <br />
 
     <div class="container">
-      <div class="card bg-success text-white">
-        <div class="card-body">
-          <h5 class="card-title">Transport Details</h5>
-          <hr />
-          <h6 class="card-title my-3">From : <%= fromAddress %></h6>
-          <h6 class="card-title my-3">To : <%= toAddress %></h6>
-          <p class="card-text fw-bold my-3">Date of Transport : <%= date %></p>
-          <p class="card-text my-3">Material : <%= material %></p>
-          <p class="card-text my-3">Weight (in MT) : <%= weight %></p>
-          <p class="card-text my-3">No. of Trucks : <%= trucks %></p>
-        </div>
-      </div>
+      <h3>Verify Industry Client</h3>
+      <br />
+      <form action="/addindustry" method="POST">
+        <!-- ? ================= 1st Input Box using Bootstrap  =========================-->
 
-      <hr />
-    </div>
-    <div class="container mb-3">
-      <h3 class="text-center">Available Drivers</h3>
-      <hr />
-      <div class="card-group">
-        <% drivers.forEach(function(driver){ %>
-        <div class="card border-primary">
-          <a href="/search/<%= driver.id %>">
-            <div class="card-body">
-              <h5 class="card-title text-dark"><%= driver.name %></h5>
-              <p class="card-text text-dark">Vehicle Type : <%= driver.vehicleType %></p>
-              <p class="card-text text-dark">Vehicle Capacity : <%= driver.vehicleCapacity %></p>
-
-              <p class="card-text">
-                <small class="text-muted">
-                  Average Rating: <% if ( driver.avgRating === undefined ) { %> 0 ⭐ <% } else { %>
-                  <%= driver.avgRating %> ⭐ <% } %>
-                </small>
-              </p>
-            </div>
-          </a>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"> ID </span>
+          </div>
+          <input type="text" class="form-control" name="id" placeholder="ID of client" />
         </div>
-        <% }); %>
-      </div>
+
+        <!-- ? ================= Button using Bootstrap  =========================-->
+        <button type="submit" class="btn btn-block btn-dark">Verify Client to Database</button>
+      </form>
     </div>
-    <br />
 
     <!-- JavaScript Bundle with Popper -->
 

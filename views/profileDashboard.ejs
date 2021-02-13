@@ -92,17 +92,46 @@
             Company Name : <%= currentUser.companyName %>
           </h6>
 
-          <!-- <hr />
-          <p class="card-text">Phone No. : <%= currentUser.phoneNo %></p>
-          <p class="card-text">E-mail : <%= currentUser.email %></p>
-          <p class="card-text">Address : <%= currentUser.address %></p> -->
-
           <hr style="color: #0d6efd" />
+          <% if (!currentUser.verified) { %>
+          <div class="mx-auto" style="width: 143px">
+            <button
+              type="button"
+              tabindex="0"
+              class="btn btn-primary"
+              data-bs-container="body"
+              data-bs-toggle="popover"
+              data-bs-trigger="focus"
+              data-bs-placement="top"
+              title="Verify your account first!"
+              data-bs-content="You'll need to verify your account, before you can start booking trucks."
+            >
+              Search for Trucks
+            </button>
+          </div>
+          <% } else{ %>
           <div class="mx-auto" style="width: 143px">
             <a href="/industrydashboard" class="btn btn-primary">Search for Trucks</a>
           </div>
+          <% } %>
         </div>
       </div>
+
+      <% if (!currentUser.verified) { %>
+      <div class="card text-white bg-danger my-2">
+        <div class="card-body">
+          <p class="card-title fs-5 fw-bold">Apply for Verification</p>
+
+          <h6 class="card-subtitle mb-2">Your account is not verified !</h6>
+          <p class="card-text">Verify your account now, to start Booking Trucks!</p>
+          <hr />
+          <div class="mx-auto" style="width: 170px">
+            <a href="/industryverify" class="btn btn-light"> Apply for verification </a>
+          </div>
+        </div>
+      </div>
+      <% } %>
+
       <div class="card text-white bg-success my-2">
         <div class="card-body">
           <p class="card-title fs-5 fw-bold mb-3">
@@ -257,5 +286,14 @@
     ></script>
 
     <!-- <script src="index.js"></script> -->
+
+    <script>
+      var popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]')
+      );
+      var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl);
+      });
+    </script>
   </body>
 </html>

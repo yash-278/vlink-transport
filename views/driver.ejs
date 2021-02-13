@@ -57,7 +57,7 @@
 
     <div class="container">
       <h2>
-        Welcome Driver, <%= currentUser.username %> <% if (currentUser.verified) { %>
+        Welcome, <%= currentUser.username %> <% if (currentUser.verified) { %>
         <i class="bi bi-patch-check-fill text-primary"></i>
         <% } %>
       </h2>
@@ -99,17 +99,20 @@
         </div>
       </div>
 
-      <% } %>
+      <% } %> <% if (!currentUser.verified) { %>
+      <div class="card text-white bg-danger my-2">
+        <div class="card-body">
+          <p class="card-title fs-5 fw-bold">Apply for Verification</p>
 
-      <!-- <p>
-        Current Work Status : <% if (currentUser.status) { %> Available <% } else { %> Working <% }
-        %>
-      </p>
-      <div>
-        Set Status :
-        <a href="/updatestatus/available" class="btn btn-success">Available</a> |
-        <a href="/updatestatus/working" class="btn btn-danger">Working</a>
-      </div> -->
+          <h6 class="card-subtitle mb-2">Your account is not verified !</h6>
+          <p class="card-text">Verify your account now, to start getting orders !</p>
+          <hr />
+          <div class="mx-auto" style="width: 170px">
+            <a href="/driververify" class="btn btn-light"> Apply for verification </a>
+          </div>
+        </div>
+      </div>
+      <% } %>
 
       <hr />
 
@@ -261,14 +264,8 @@
           </div>
         </div>
       </div>
-
-      <hr />
-      <% if (!currentUser.verified) { %>
-
-      <a href="/driververify" class="btn btn-dark">Apply for Verification</a>
-      <% } %>
     </div>
-
+    <br />
     <!-- JavaScript Bundle with Popper -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
