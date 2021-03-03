@@ -16,6 +16,10 @@ router.get("/industrylogin", (req, res) => {
   }
 });
 
+router.get("/industrysignin", (req, res) => {
+  res.render("industrySignIn");
+});
+
 router.get("/profiledashboard", ensureAuthenticated, (req, res) => {
   res.render("profileDashboard", {
     currentUser: req.user,

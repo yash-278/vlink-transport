@@ -68,81 +68,84 @@
     <br />
 
     <div class="container">
-      <form action="/search" method="POST">
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">From</label>
-          <input
-            type="text"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Address"
-            name="fromAddress"
-          />
+      <div class="card bg-success text-white">
+        <div class="card-body">
+          <form action="/search" method="POST">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">From</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleFormControlInput1"
+                placeholder="Address"
+                name="fromAddress"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">To</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleFormControlInput1"
+                placeholder="Address"
+                name="toAddress"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="material" class="form-label">Material</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleFormControlInput1"
+                placeholder="Input Material"
+                name="material"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="weight" class="form-label">Weight (in MT)</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleFormControlInput1"
+                placeholder="Input Weight"
+                name="weight"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="noOfTrucks" class="form-label">No. of Trucks</label>
+              <select id="noOfTrucks" name="trucks" class="form-control">
+                <option selected value="0">Select</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">Not Decided</option>
+              </select>
+            </div>
+
+            <h3>Pick Date</h3>
+            <div class="ui calendar" id="example2">
+              <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="text" placeholder="Date" name="date" />
+              </div>
+            </div>
+            <br />
+
+            <button class="btn btn-dark" type="submit">Search Trucks</button>
+          </form>
         </div>
-
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">To</label>
-          <input
-            type="text"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Address"
-            name="toAddress"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="material" class="form-label">Material</label>
-          <input
-            type="text"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Input Material"
-            name="material"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="weight" class="form-label">Weight (in MT)</label>
-          <input
-            type="text"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Input Weight"
-            name="weight"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="noOfTrucks" class="form-label">No. of Trucks</label>
-          <select id="noOfTrucks" name="trucks" class="form-control">
-            <option selected value="0">Select</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">Not Decided</option>
-          </select>
-        </div>
-
-        <h3>Pick Date</h3>
-        <div class="ui calendar" id="example2">
-          <div class="ui input left icon">
-            <i class="calendar icon"></i>
-            <input type="text" placeholder="Date" name="date" />
-          </div>
-        </div>
-        <br />
-
-        <button class="btn btn-primary" type="submit">Search Trucks</button>
-      </form>
-
+      </div>
       <hr />
       <% if (!currentUser.verified) { %>
       <a href="/industryverify" class="btn btn-dark">Apply for Verification</a>

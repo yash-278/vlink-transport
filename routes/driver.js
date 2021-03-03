@@ -13,6 +13,10 @@ router.get("/driverlogin", (req, res) => {
   }
 });
 
+router.get("/driversignin", (req, res) => {
+  res.render("driverSignIn");
+});
+
 router.get("/driverdashboard", ensureAuthenticated, (req, res) => {
   res.render("driver", {
     currentUser: req.user,
