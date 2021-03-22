@@ -70,16 +70,18 @@
     <div class="container">
       <div class="card bg-success text-white">
         <div class="card-body">
-          <form action="/search" method="POST">
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">From</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="Address"
-                name="fromAddress"
-              />
+          <form action="/search" autocomplete="off" method="POST">
+            <div class="autocomplete">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">From</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="myInput"
+                  placeholder="Address"
+                  name="fromAddress"
+                />
+              </div>
             </div>
 
             <div class="mb-3">
@@ -165,5 +167,9 @@
     ></script>
 
     <script src="index.js"></script>
+
+    <script>
+      autocomplete(document.getElementById("myInput"), countries);
+    </script>
   </body>
 </html>
