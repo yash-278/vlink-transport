@@ -84,7 +84,20 @@
               </div>
             </div>
 
-            <div class="mb-3">
+            <div class="autocomplete">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">To</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="myInput2"
+                  placeholder="Address"
+                  name="toAddress"
+                />
+              </div>
+            </div>
+
+            <!-- <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">To</label>
               <input
                 type="text"
@@ -93,7 +106,7 @@
                 placeholder="Address"
                 name="toAddress"
               />
-            </div>
+            </div> -->
 
             <div class="mb-3">
               <label for="material" class="form-label">Material</label>
@@ -170,6 +183,7 @@
 
     <script>
       autocomplete(document.getElementById("myInput"), countries);
+      autocomplete(document.getElementById("myInput2"), countries);
     </script>
   </body>
 </html>

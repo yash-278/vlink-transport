@@ -73,6 +73,7 @@ function scrollFunction() {
 }
 
 var countries = [
+  // Maharashtra
   "Mumbai",
   "Pune",
   "Nagpur",
@@ -89,6 +90,30 @@ var countries = [
   "Ahmednagar",
   "Ratnagiri",
   "Satara",
+  // Gujrat
+  "Ahmedabad",
+  "Surat",
+  "Vadodara",
+  "Rajkot",
+  "Bhavnagar",
+  "Jamnagar",
+  "Junagadh",
+  "Gandhinagar",
+  "Gandhidham",
+  "Anand",
+  "Porbandar",
+  // Madhya Pradesh
+  "Indore",
+  "Bhopal",
+  "Jabalpur",
+  "Gwalior",
+  "Ujjain",
+  "Dewas",
+  "Ratlam",
+  "Rewa",
+  "Burhanpur",
+  "Khandwa",
+  "Bhind",
 ];
 
 function autocomplete(inp, arr) {
